@@ -1,0 +1,10 @@
+{
+  "description": "Royalpalm International College is an elite co-educational day and boarding college delivering world-class education at an affordable price, blending the Nigerian National Curriculum with the international curriculum.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

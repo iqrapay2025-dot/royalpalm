@@ -1,0 +1,31 @@
+import { Footer, Header, ScrollTop } from './components/Layout'
+import { useRoute } from './lib/router'
+import Home from './pages/Home'
+import { About, Academics, Admissions, Contact, Facilities, Leadership, News, StudentLife } from './pages/Inner'
+
+const ROUTES: Record<string, () => React.ReactElement> = {
+  '/': Home,
+  '/about': About,
+  '/academics': Academics,
+  '/facilities': Facilities,
+  '/student-life': StudentLife,
+  '/leadership': Leadership,
+  '/news': News,
+  '/admissions': Admissions,
+  '/contact': Contact,
+}
+
+export default function App() {
+  const route = useRoute()
+  const Page = ROUTES[route] ?? Home
+  return (
+    <div className="min-h-screen overflow-x-clip">
+      <Header route={route} />
+      <main key={route} className="page-in">
+        <Page />
+      </main>
+      <Footer />
+      <ScrollTop />
+    </div>
+  )
+}
