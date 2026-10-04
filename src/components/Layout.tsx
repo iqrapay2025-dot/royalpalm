@@ -9,6 +9,16 @@ export function Header({ route }: { route: string }) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [progress, setProgress] = useState(0)
+
+  const toggleMenu = () => {
+    const isOpening = !open
+    setOpen(isOpening)
+
+    if (isOpening && window.innerWidth < 1024) {
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+  }
+
   useEffect(() => {
     let last = window.scrollY
     const on = () => {
@@ -66,7 +76,7 @@ export function Header({ route }: { route: string }) {
             })}
           </nav>
           <div className="hidden shrink-0 xl:block"><Button to="/admissions" variant="navy">Apply Now</Button></div>
-          <button className="rounded-full p-2 text-wine-900 transition-colors hover:bg-cream-deep lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>
+          <button className="rounded-full p-2 text-wine-900 transition-colors hover:bg-cream-deep lg:hidden" onClick={toggleMenu} aria-label="Toggle menu" aria-expanded={open}>
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
             </svg>
