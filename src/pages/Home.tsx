@@ -55,11 +55,6 @@ export default function Home() {
 
       <Section tone="cream"><Testimonials /></Section>
 
-      <Section>
-        <SectionHeader eyebrow="Latest News" title="Stories from RICO" />
-        <CardGrid items={NEWS.map((n) => ({ ...n, to: '/news' }))} variant="news" />
-      </Section>
-
       <Section tone="cream"><EventsCalendar /></Section>
     </>
   )

@@ -15,7 +15,9 @@ export function Header({ route }: { route: string }) {
     setOpen(isOpening)
 
     if (isOpening && window.innerWidth < 1024) {
-      window.scrollTo({ top: 0, behavior: 'auto' })
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      })
     }
   }
 
@@ -85,7 +87,7 @@ export function Header({ route }: { route: string }) {
         {open && (
           <nav className="max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-line bg-white px-5 pb-8 pt-2 lg:hidden" aria-label="Mobile">
             {NAV.map((n) => (
-              <Link key={n.to} to={n.to} className={`block border-b border-line/70 py-3.5 text-base font-semibold transition-colors hover:text-gold-deep ${route === n.to ? 'text-gold-deep' : 'text-wine-900'}`}>
+              <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className={`block border-b border-line/70 py-3.5 text-base font-semibold transition-colors hover:text-gold-deep ${route === n.to ? 'text-gold-deep' : 'text-wine-900'}`}>
                 {n.label}
               </Link>
             ))}

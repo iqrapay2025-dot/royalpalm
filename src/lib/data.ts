@@ -41,7 +41,6 @@ export const NAV = [
   { to: '/facilities', label: 'Facilities' },
   { to: '/student-life', label: 'Student Life' },
   { to: '/leadership', label: 'Leadership' },
-  { to: '/news', label: 'News' },
   { to: '/admissions', label: 'Admissions' },
   { to: '/contact', label: 'Contact' },
 ]

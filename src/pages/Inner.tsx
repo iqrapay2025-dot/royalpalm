@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Button, CardGrid, CtaBanner, PageHero, Placeholder, Reveal, Section, SectionHeader } from '../components/ui'
 import { EventsCalendar, StatBar } from '../components/sections'
 import { FACILITIES, IMG, INITIATIVES, NEWS, SCHOOL, STAFF, TRACKS } from '../lib/data'
+import calendarPdf from '../assets/1ST TERM 2026-2027 ACADEMIC SESSION CALENDER.pdf'
 
 export function About() {
   const pillars = [
@@ -59,6 +60,7 @@ export function Academics() {
         <SectionHeader eyebrow="Core Tracks" title="Science, Arts, Entrepreneurship" />
         <CardGrid items={TRACKS.map((t) => ({ ...t, to: undefined }))} variant="program" />
       </Section>
+      <AcademicCalendar />
       <Section><EventsCalendar /></Section>
     </>
   )
@@ -121,6 +123,184 @@ export function News() {
         <div className="mx-auto mt-14 max-w-3xl"><Placeholder>Real articles and exam timetable posts will be published here by the school.</Placeholder></div>
       </Section>
     </>
+  )
+}
+
+type CalendarWeek = {
+  week: number
+  dates: string
+  theme: string
+  facilitator: string
+  classHouse: string
+  activities: string[]
+}
+
+const ACADEMIC_TERMS = ['1st Term', '2nd Term', '3rd Term'] as const
+const ACADEMIC_KEY_DATES = [
+  { date: 'Sept 20, 2026', label: 'Boarding Students Resume' },
+  { date: 'Sept 21, 2026', label: 'Day Students Resume' },
+  { date: 'Oct 21–23, 2026', label: 'Mid-Term Break' },
+  { date: 'Oct 21, 2026', label: 'Open Day / Mid-Term Reports' },
+  { date: 'Nov 28, 2026', label: 'Visiting Day' },
+  { date: 'Nov 26 – Dec 11, 2026', label: '1st Term Examination' },
+  { date: 'Dec 15, 2026', label: 'Christmas Carol' },
+  { date: 'Dec 18, 2026', label: 'Vacation Begins' },
+]
+
+const ACADEMIC_WEEKLY_ACTIVITIES = [
+  'Monday Morning Assembly + Teacher Presentation + Word of the Day',
+  'Wednesday Morning Assembly + Class/House Presentation + Sports',
+  'Friday Morning Assembly + Casting of News + Jumu\'ah/Fellowship of Christian Students',
+  'Entrepreneurship Programme',
+  'Mentoring & Leadership Programme',
+]
+
+const ACADEMIC_WEEKS: CalendarWeek[] = [
+  { week: 1, dates: '21–25 Sept 2026', theme: 'Start Early', facilitator: 'Mrs. Olayinka', classHouse: 'JSS 1', activities: ['Start of term orientation and settling-in routines', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 2, dates: '28 Sept – 2 Oct 2026', theme: 'Making Every Minute Count', facilitator: 'Mr Abraham', classHouse: 'JSS 2', activities: ['Time-management focus and personal planning', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 3, dates: '5–9 Oct 2026', theme: 'The Future Belongs to the Prepared', facilitator: 'Mr Abubakar R.O', classHouse: 'JSS 3', activities: ['Preparation habits and academic planning', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 4, dates: '12–16 Oct 2026', theme: 'Who Are You Becoming', facilitator: 'Mr. Onipede Samson', classHouse: 'SS 1', activities: ['1st CA Tests throughout the week', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 5, dates: '19–23 Oct 2026', theme: 'Push Your Limits', facilitator: 'Mr Ajiboye Abubakar', classHouse: 'SS 2', activities: ['Olympia Maths Challenge', 'Open Day', 'Mid-Term Break', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 6, dates: '26–30 Oct 2026', theme: 'Rules Are Made to Protect You', facilitator: 'Mr. Wasiu Afolabi', classHouse: 'SS 3', activities: ['School rules and safe conduct review', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 7, dates: '2–6 Nov 2026', theme: 'Become a Solution, Not a Problem', facilitator: 'Mrs. Henry Gift', classHouse: 'Red House', activities: ['House-based problem-solving and service activities', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 8, dates: '9–13 Nov 2026', theme: 'Avoid Shortcut', facilitator: 'Mrs. Eunice Samuel', classHouse: 'Blue House', activities: ['Academic integrity and responsible decision-making', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 9, dates: '16–20 Nov 2026', theme: 'Hate Speech and Its Implication', facilitator: 'Mr. Abraham', classHouse: 'Yellow House', activities: ['2nd CA Tests', 'Respect, communication and digital citizenship', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 10, dates: '23–27 Nov 2026', theme: 'Danger of Examination Malpractice', facilitator: 'Mr. Ifefikayo Ogunlusi', classHouse: 'Green House', activities: ['Exam conduct and ethical preparation', 'Visiting Day: Nov 28, 2026', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 11, dates: '30 Nov – 4 Dec 2026', theme: 'Start Early', facilitator: 'Mr. John Oderinde', classHouse: '—', activities: ['1st Term Examination begins Nov 26, 2026', 'Early preparation and revision routines', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 12, dates: '7–11 Dec 2026', theme: 'Never Give Up', facilitator: 'Mrs. Olayinka', classHouse: '—', activities: ['1st Term Examination continues', 'Revision, resilience and support', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 13, dates: '14–18 Dec 2026', theme: 'Marking & Collation of Results', facilitator: 'Mr Abraham', classHouse: '—', activities: ['Marking and collation of results', 'Christmas Carol: Dec 15, 2026', 'Vacation begins: Dec 18, 2026', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+]
+
+const FACILITATOR_GUIDELINES = [
+  'Prepare and present a short Monday message that reinforces the week\'s theme and the Word of the Day.',
+  'On Wednesday, guide a class or house presentation that connects the theme to practical student responsibility.',
+  'Adhere to the weekly timing schedule for assemblies, presentations, sports and all programmed activities.',
+  'Prepare materials and brief students in advance so the activities are focused and purposeful.',
+  'Arrange a Students\' Court sitting whenever a conduct or discipline matter requires formal student participation.',
+]
+
+function AcademicCalendar() {
+  const [term, setTerm] = useState<(typeof ACADEMIC_TERMS)[number]>('1st Term')
+  const [expanded, setExpanded] = useState(1)
+
+  return (
+    <Section id="academic-calendar" tone="cream">
+      <SectionHeader eyebrow="Academic Calendar" title="1st Term 2026/2027" text="The key dates and weekly themes guiding the term." />
+
+      <div className="mt-10 overflow-hidden rounded-3xl border border-line bg-white shadow-xl shadow-wine-900/5">
+        <div className="flex items-center justify-between gap-4 border-b border-line bg-wine-950 px-5 py-4 text-white md:px-7">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-light">Academic Year</p>
+            <h3 className="mt-1 font-display text-xl font-semibold">2026/2027</h3>
+          </div>
+          <div className="flex gap-2 rounded-full bg-white/10 p-1">
+            {ACADEMIC_TERMS.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setTerm(item)}
+                className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] transition-colors ${term === item ? 'bg-gold text-wine-950' : 'text-white/65 hover:text-white'}`}
+                aria-pressed={term === item}
+                disabled={item !== '1st Term'}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-b border-line bg-gold/10 p-4 md:p-5">
+          <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {ACADEMIC_KEY_DATES.map((item) => (
+              <article key={item.label} className="min-w-[210px] rounded-2xl border border-gold/30 bg-white p-4 shadow-sm">
+                <p className="font-display text-lg font-bold text-wine-900 md:text-xl">{item.date}</p>
+                <p className="mt-2 text-xs font-bold uppercase tracking-[0.16em] text-gold-deep">{item.label}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="p-5 md:p-7">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">Weekly Themes</p>
+              <h3 className="mt-2 font-display text-2xl font-bold text-wine-900 md:text-3xl">Term overview</h3>
+            </div>
+            <p className="text-sm text-mute">13 focused learning weeks</p>
+          </div>
+
+          <div className="mt-6 space-y-3">
+            {ACADEMIC_WEEKS.map((week) => {
+              const open = expanded === week.week
+              return (
+                <div key={week.week} className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition-shadow hover:shadow-lg hover:shadow-wine-900/10">
+                  <button
+                    type="button"
+                    className="flex w-full items-center gap-4 p-4 text-left md:p-5"
+                    onClick={() => setExpanded(open ? 0 : week.week)}
+                    aria-expanded={open}
+                  >
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-wine-900 font-display text-lg font-bold text-gold-light">{week.week}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-xs font-bold uppercase tracking-[0.16em] text-gold-deep">{week.dates}</span>
+                      <span className="mt-1 block font-display text-lg font-bold text-wine-900 md:text-xl">{week.theme}</span>
+                    </span>
+                    <span className="text-xl font-semibold text-wine-900">{open ? '−' : '+'}</span>
+                  </button>
+                  {open && (
+                    <div className="border-t border-line bg-cream/60 p-4 md:p-6">
+                      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
+                        <div>
+                          <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-gold-deep">Weekly activities</h4>
+                          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                            {week.activities.map((activity) => (
+                              <li key={activity} className="flex gap-2 text-sm leading-relaxed text-ink">
+                                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                                <span>{activity}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="rounded-2xl border border-line bg-white p-5">
+                          <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-deep">Assigned</p>
+                          <div className="mt-4 border-b border-line pb-4">
+                            <p className="text-xs uppercase tracking-[0.14em] text-mute">Theme Facilitator</p>
+                            <p className="mt-1 font-display text-xl font-bold text-wine-900">{week.facilitator}</p>
+                          </div>
+                          <div className="mt-4">
+                            <p className="text-xs uppercase tracking-[0.14em] text-mute">Class / House</p>
+                            <p className="mt-1 font-display text-xl font-bold text-wine-900">{week.classHouse}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-8 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm leading-relaxed text-mute">This is a school-wide weekly programme designed to support character development, academic preparation and student leadership.</p>
+            <a href={calendarPdf} download className="inline-flex items-center justify-center rounded-full border border-wine-900 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-wine-900 transition-colors hover:bg-wine-900 hover:text-white">
+              Download Full Calendar (PDF)
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <details className="mt-6 rounded-2xl border border-line bg-white px-5 py-4 text-sm text-mute shadow-sm">
+        <summary className="cursor-pointer list-none font-semibold text-wine-900">Facilitator Guidelines</summary>
+        <ul className="mt-4 space-y-3 border-t border-line pt-4">
+          {FACILITATOR_GUIDELINES.map((note) => (
+            <li key={note} className="flex gap-3">
+              <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+              <span>{note}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </Section>
   )
 }
 

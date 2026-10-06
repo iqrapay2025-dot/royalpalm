@@ -1,7 +1,7 @@
 import { Footer, Header, ScrollTop } from './components/Layout'
 import { useRoute } from './lib/router'
 import Home from './pages/Home'
-import { About, Academics, Admissions, Contact, Facilities, Leadership, News, StudentLife } from './pages/Inner'
+import { About, Academics, Admissions, Contact, Facilities, Leadership, StudentLife } from './pages/Inner'
 
 const ROUTES: Record<string, () => React.ReactElement> = {
   '/': Home,
@@ -10,7 +10,6 @@ const ROUTES: Record<string, () => React.ReactElement> = {
   '/facilities': Facilities,
   '/student-life': StudentLife,
   '/leadership': Leadership,
-  '/news': News,
   '/admissions': Admissions,
   '/contact': Contact,
 }
