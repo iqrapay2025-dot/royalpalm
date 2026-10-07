@@ -336,7 +336,7 @@ export function Admissions() {
   )
 }
 
-const TEST_RECIPIENT = 'royalpalmcollegeilorin@gmail.com'
+const RECIPIENT = 'royalpalmcollegeilorin@gmail.com'
 
 export function Contact() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -346,7 +346,7 @@ export function Contact() {
     const f = new FormData(form)
     setStatus('sending')
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${TEST_RECIPIENT}`, {
+      const res = await fetch(`https://formsubmit.co/ajax/${RECIPIENT}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ name: f.get('name'), email: f.get('email'), message: f.get('message'), _subject: `RICO website enquiry from ${f.get('name')}`, _replyto: f.get('email') }),
