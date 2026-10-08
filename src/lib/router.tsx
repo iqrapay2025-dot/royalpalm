@@ -1,20 +1,14 @@
-import { useEffect, useState, type AnchorHTMLAttributes } from 'react'
-
-const read = () => window.location.hash.replace(/^#/, '') || '/'
+import { useEffect, type AnchorHTMLAttributes } from 'react'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 export function useRoute() {
-  const [route, setRoute] = useState(read)
+  const { pathname } = useLocation()
   useEffect(() => {
-    const on = () => {
-      setRoute(read())
-      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
-    }
-    window.addEventListener('hashchange', on)
-    return () => window.removeEventListener('hashchange', on)
-  }, [])
-  return route
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }, [pathname])
+  return pathname || '/'
 }
 
 export function Link({ to, ...rest }: { to: string } & AnchorHTMLAttributes<HTMLAnchorElement>) {
-  return <a href={`#${to}`} {...rest} />
+  return <RouterLink to={to} {...rest} />
 }

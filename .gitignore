@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+raw-staff-photos/
 .cache/
 .env*
 .vite/

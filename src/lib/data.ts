@@ -145,10 +145,60 @@ export const INITIATIVES: CardItem[] = [
   },
 ]
 
-export const STAFF: CardItem[] = [
-  { title: 'Bosun Adeoye', eyebrow: 'Principal', text: 'Leads RICO’s academic and pastoral vision.', image: '/photos/principal.png' },
-  { title: 'Mike Oluribido', eyebrow: 'Sports Director', text: 'Directs the sporting arena and athletics programmes.', image: '/photos/sports-director.jpg' },
-  { title: 'Mrs. Ikubaani', eyebrow: 'Language Department', text: 'Heads the Language Department.', image: '/photos/ikubaani.jpg' },
+export type StaffGroup = 'management' | 'academic' | 'teachers' | 'welfare'
+
+export type StaffMember = {
+  slug: string
+  name: string
+  role: string
+  group: StaffGroup
+  bio?: string
+  image?: string
+}
+
+export const STAFF: StaffMember[] = [
+  { slug: 'adeoye-olatunbosun', name: 'Olatunbosun Adeoye', role: 'Principal', group: 'management', bio: 'Leads RICO’s academic and pastoral vision.', image: '/photos/principal.png' },
+  { slug: 'adeyemi-tosin', name: 'Tosin Adeyemi', role: 'AGM Logistics', group: 'management' },
+  { slug: 'alabi-oladimeji', name: 'Oladimeji Alabi', role: 'AGM Finance', group: 'management' },
+  { slug: 'omolere-vincent', name: 'Vincent Omolere', role: 'Admin Manager & PRO', group: 'management' },
+  { slug: 'olanrewaju-samson', name: 'Samson Olanrewaju', role: 'College Secretary', group: 'management' },
+  { slug: 'samuel-eunice', name: 'Eunice Samuel', role: 'ICT Manager', group: 'management' },
+  { slug: 'abisoye-titilayo', name: 'Titilayo Abisoye', role: 'HOD, Arts and Languages', group: 'academic' },
+  { slug: 'ola-subair-fatima', name: 'Fatima Ola-Subair', role: 'HOD, Sciences', group: 'academic' },
+  { slug: 'agbaje-amos', name: 'Amos Agbaje', role: 'HOD, Social Sciences', group: 'academic' },
+  { slug: 'oluribido-mike', name: 'Mike Oluribido', role: 'HOD, Special Duties & Sports Director', group: 'academic', bio: 'Directs the sporting arena and athletics programmes.', image: '/photos/sports-director.jpg' },
+  { slug: 'atolagbe-adebukola', name: 'Adebukola Atolagbe', role: 'Coordinator, Junior Secondary School', group: 'academic' },
+  { slug: 'ayanlere-nurudeen', name: 'Nurudeen Ayanlere', role: 'Asst. Coordinator, Junior Secondary School', group: 'academic' },
+  { slug: 'hassan-afolabi', name: 'Afolabi Hassan', role: 'Economics & Commerce', group: 'teachers' },
+  { slug: 'olayinka-mercy', name: 'Mercy Olayinka', role: 'English Language & Literature-in-English', group: 'teachers' },
+  { slug: 'henry-chioma', name: 'Chioma Henry', role: 'English & Literature-in-English', group: 'teachers' },
+  { slug: 'atabofack-thomas', name: 'Thomas Atabofack', role: 'French', group: 'teachers' },
+  { slug: 'ogunlusi-ifefikayomi', name: 'Ifefikayomi Ogunlusi', role: 'English Language & Music', group: 'teachers' },
+  { slug: 'abubakar-rasaq', name: 'Rasaq Abubakar', role: 'Chief Imam & IRS', group: 'teachers' },
+  { slug: 'abraham-afolabi', name: 'Afolabi Abraham', role: 'Horticulture', group: 'teachers' },
+  { slug: 'oderinde-john', name: 'John Oderinde', role: 'TD & Mathematics', group: 'teachers' },
+  { slug: 'ajiboye-abiodun', name: 'Abiodun Ajiboye', role: 'Chemistry & Mathematics', group: 'teachers' },
+  { slug: 'onipede-olayinka', name: 'Olayinka Onipede', role: 'Geography & Tourism', group: 'teachers' },
+  { slug: 'ishola-kehinde', name: 'Kehinde Ishola', role: 'Environmentalist', group: 'teachers' },
+  { slug: 'tsado-felicia', name: 'Felicia Tsado', role: 'Environmentalist', group: 'teachers' },
+  { slug: 'ishola-olaoluwa', name: 'Olaoluwa Ishola', role: 'Hostel Master', group: 'welfare' },
+  { slug: 'folayan-segun', name: 'Segun Folayan', role: 'Security Officer & Asst. Hostel Master', group: 'welfare' },
+  { slug: 'babatunde-sherifat', name: 'Sherifat Babatunde', role: 'Matron & College Nurse', group: 'welfare' },
+  { slug: 'oladele-oyinlola', name: 'Oyinlola Oladele', role: 'Asst. Matron & College Nurse', group: 'welfare' },
+  { slug: 'adeyi-grace', name: 'Grace Adeyi', role: 'College Chef', group: 'welfare' },
+  { slug: 'zaccheus-sarah', name: 'Sarah Zaccheus', role: 'Kitchen Staff', group: 'welfare' },
+  { slug: 'lawal-stella', name: 'Stella Lawal', role: 'Kitchen Staff', group: 'welfare' },
+  { slug: 'sulyman-yetunde', name: 'Yetunde Sulyman', role: 'Tuckshop Attendant & Kitchen Staff', group: 'welfare' },
+  { slug: 'jimoh-kuburah', name: 'Kuburah Jimoh', role: 'Bus Assistant & Kitchen Staff', group: 'welfare' },
+  { slug: 'zakariyawu-alhassan', name: 'Alhassan Zakariyawu', role: 'Chief Transport Officer', group: 'welfare' },
+  { slug: 'haruna-zakariyah', name: 'Zakariyah Haruna', role: 'CSO, Maintenance', group: 'welfare' },
+  { slug: 'mohammed-mohammed', name: 'Mohammed Mohammed', role: 'Technical Officer & Security Supervisor', group: 'welfare' },
+  { slug: 'joshua-philip', name: 'Philip Joshua', role: 'Security Officer', group: 'welfare' },
+  { slug: 'olateju-jamiu', name: 'Jamiu Olateju', role: 'Security Officer', group: 'welfare' },
+  { slug: 'yakub-fatimah', name: 'Fatimah Yakub', role: 'Security Officer', group: 'welfare' },
+  { slug: 'don-habila', name: 'Habila Don', role: 'Security Personnel', group: 'welfare' },
+  { slug: 'abafaraf-simon', name: 'Simon Abafaraf', role: 'Security Personnel', group: 'welfare' },
+  { slug: 'yusuf-shehu', name: 'Shehu Yusuf', role: 'Security Personnel', group: 'welfare' },
 ]
 
 export const NEWS: CardItem[] = [

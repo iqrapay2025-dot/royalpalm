@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Button, CardGrid, CtaBanner, PageHero, Placeholder, Reveal, Section, SectionHeader } from '../components/ui'
 import { EventsCalendar, StatBar } from '../components/sections'
-import { FACILITIES, IMG, INITIATIVES, NEWS, SCHOOL, STAFF, TRACKS } from '../lib/data'
+import { StaffPhoto } from '../components/StaffPhoto'
+import { FACILITIES, IMG, INITIATIVES, NEWS, SCHOOL, STAFF, TRACKS, type StaffGroup, type StaffMember } from '../lib/data'
 import calendarPdf from '../assets/1ST TERM 2026-2027 ACADEMIC SESSION CALENDER.pdf'
 
 export function About() {
@@ -91,15 +92,112 @@ export function StudentLife() {
   )
 }
 
+type StaffFilter = 'all' | StaffGroup
+
+const STAFF_FILTERS: { value: StaffFilter; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'management', label: 'Management' },
+  { value: 'academic', label: 'Academic Leadership' },
+  { value: 'teachers', label: 'Teachers' },
+  { value: 'welfare', label: 'Student Welfare & Support' },
+]
+
+const STAFF_GROUPS: { value: StaffGroup; label: string }[] = [
+  { value: 'management', label: 'Management' },
+  { value: 'academic', label: 'Academic Leadership' },
+  { value: 'teachers', label: 'Teachers' },
+  { value: 'welfare', label: 'Student Welfare & Support' },
+]
+
+function StaffDirectoryCard({ person, index, compact }: { person: StaffMember; index: number; compact: boolean }) {
+  return (
+    <Reveal delay={Math.min(index * 45, 300)} className="h-full">
+      <article className="flex h-full flex-col items-center overflow-hidden rounded-3xl border border-line bg-white p-5 text-center">
+        <StaffPhoto
+          slug={person.slug}
+          name={person.name}
+          shape={compact ? 'circle' : 'portrait'}
+          className={compact ? 'h-24 w-24 border-2 border-gold' : 'w-full'}
+        />
+        <div className={compact ? 'mt-4' : 'mt-5'}>
+          <h3 className={`font-display font-bold text-wine-900 ${compact ? 'text-base' : 'text-lg'}`}>{person.name}</h3>
+          <p className="mt-2 text-sm text-mute">{person.role}</p>
+        </div>
+      </article>
+    </Reveal>
+  )
+}
+
 export function Leadership() {
+  const [activeFilter, setActiveFilter] = useState<StaffFilter>('all')
+  const [showAllWelfare, setShowAllWelfare] = useState(false)
+  const principal = STAFF.find((person) => person.slug === 'adeoye-olatunbosun')
+  const groups = STAFF_GROUPS.filter((group) => activeFilter === 'all' || group.value === activeFilter)
+
   return (
     <>
       <PageHero eyebrow="Leadership & Staff" title="The people raising kings and queens." image={IMG.classroom2} />
       <Section>
-        <SectionHeader eyebrow="Management" title="Meet our leadership" />
-        <CardGrid items={STAFF} variant="staff" />
+        <div className="flex flex-wrap justify-center gap-3">
+          {STAFF_FILTERS.map((filter) => (
+            <button
+              key={filter.value}
+              type="button"
+              onClick={() => {
+                setActiveFilter(filter.value)
+                setShowAllWelfare(false)
+              }}
+              aria-pressed={activeFilter === filter.value}
+              className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 hover:scale-105 ${activeFilter === filter.value ? 'bg-wine-900 text-white' : 'bg-white text-wine-900 hover:bg-gold-light'}`}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+
+        {principal && (activeFilter === 'all' || activeFilter === 'management') && (
+          <article className="mt-12 overflow-hidden rounded-3xl border border-line bg-white md:grid md:grid-cols-2">
+            <StaffPhoto slug={principal.slug} name={principal.name} shape="portrait" className="w-full" />
+            <div className="flex flex-col justify-center p-7 md:p-10">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">{principal.role}</p>
+              <h2 className="mt-3 font-display text-3xl font-bold text-wine-900 md:text-4xl">{principal.name}</h2>
+            </div>
+          </article>
+        )}
+
+        <div key={activeFilter} className="mt-14 space-y-14">
+          {groups.map((group) => {
+            const people = STAFF.filter((person) =>
+              person.group === group.value && !(group.value === 'management' && person.slug === 'adeoye-olatunbosun'),
+            )
+            const compact = group.value === 'teachers' || group.value === 'welfare'
+            const shownPeople = group.value === 'welfare' && !showAllWelfare ? people.slice(0, 10) : people
+
+            return (
+              <section key={group.value}>
+                <h2 className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">{group.label}</h2>
+                <div className={`mt-6 grid gap-6 ${compact ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
+                  {shownPeople.map((person, index) => (
+                    <StaffDirectoryCard key={person.slug} person={person} index={index} compact={compact} />
+                  ))}
+                </div>
+                {group.value === 'welfare' && people.length > 10 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllWelfare((shown) => !shown)}
+                    aria-expanded={showAllWelfare}
+                    className="mt-7 rounded-full border border-wine-900 px-5 py-2.5 text-sm font-semibold text-wine-900 transition-colors hover:bg-wine-900 hover:text-white"
+                  >
+                    {showAllWelfare ? 'Show less' : `Show all ${people.length}`}
+                  </button>
+                )}
+              </section>
+            )
+          })}
+        </div>
+
         <div className="mx-auto mt-14 max-w-3xl">
-          <Placeholder>A fuller staff directory and photos for our 100+ professional teachers will be added once supplied by the school.</Placeholder>
+          <Placeholder>More teachers and staff will be added as photos are supplied.</Placeholder>
         </div>
       </Section>
     </>
@@ -156,12 +254,12 @@ const ACADEMIC_WEEKLY_ACTIVITIES = [
 ]
 
 const ACADEMIC_WEEKS: CalendarWeek[] = [
-  { week: 1, dates: '21–25 Sept 2026', theme: 'Start Early', facilitator: 'Mrs. Olayinka', classHouse: 'JSS 1', activities: ['Start of term orientation and settling-in routines', ...ACADEMIC_WEEKLY_ACTIVITIES] },
-  { week: 2, dates: '28 Sept – 2 Oct 2026', theme: 'Making Every Minute Count', facilitator: 'Mr Abraham', classHouse: 'JSS 2', activities: ['Time-management focus and personal planning', ...ACADEMIC_WEEKLY_ACTIVITIES] },
-  { week: 3, dates: '5–9 Oct 2026', theme: 'The Future Belongs to the Prepared', facilitator: 'Mr Abubakar R.O', classHouse: 'JSS 3', activities: ['Preparation habits and academic planning', ...ACADEMIC_WEEKLY_ACTIVITIES] },
-  { week: 4, dates: '12–16 Oct 2026', theme: 'Who Are You Becoming', facilitator: 'Mr. Onipede Samson', classHouse: 'SS 1', activities: ['1st CA Tests throughout the week', ...ACADEMIC_WEEKLY_ACTIVITIES] },
-  { week: 5, dates: '19–23 Oct 2026', theme: 'Push Your Limits', facilitator: 'Mr Ajiboye Abubakar', classHouse: 'SS 2', activities: ['Olympia Maths Challenge', 'Open Day', 'Mid-Term Break', ...ACADEMIC_WEEKLY_ACTIVITIES] },
-  { week: 6, dates: '26–30 Oct 2026', theme: 'Rules Are Made to Protect You', facilitator: 'Mr. Wasiu Afolabi', classHouse: 'SS 3', activities: ['School rules and safe conduct review', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 1, dates: '21–25 Sept 2026', theme: 'Start Early', facilitator: 'Mrs. Olayinka', classHouse: 'Year 7', activities: ['Start of term orientation and settling-in routines', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 2, dates: '28 Sept – 2 Oct 2026', theme: 'Making Every Minute Count', facilitator: 'Mr Abraham', classHouse: 'Year 8', activities: ['Time-management focus and personal planning', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 3, dates: '5–9 Oct 2026', theme: 'The Future Belongs to the Prepared', facilitator: 'Mr Abubakar R.O', classHouse: 'Year 9', activities: ['Preparation habits and academic planning', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 4, dates: '12–16 Oct 2026', theme: 'Who Are You Becoming', facilitator: 'Mr. Onipede Samson', classHouse: 'Year 10', activities: ['1st CA Tests throughout the week', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 5, dates: '19–23 Oct 2026', theme: 'Push Your Limits', facilitator: 'Mr Ajiboye Abubakar', classHouse: 'Year 11', activities: ['Olympia Maths Challenge', 'Open Day', 'Mid-Term Break', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 6, dates: '26–30 Oct 2026', theme: 'Rules Are Made to Protect You', facilitator: 'Mr. Wasiu Afolabi', classHouse: 'Year 12', activities: ['School rules and safe conduct review', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 7, dates: '2–6 Nov 2026', theme: 'Become a Solution, Not a Problem', facilitator: 'Mrs. Henry Gift', classHouse: 'Red House', activities: ['House-based problem-solving and service activities', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 8, dates: '9–13 Nov 2026', theme: 'Avoid Shortcut', facilitator: 'Mrs. Eunice Samuel', classHouse: 'Blue House', activities: ['Academic integrity and responsible decision-making', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 9, dates: '16–20 Nov 2026', theme: 'Hate Speech and Its Implication', facilitator: 'Mr. Abraham', classHouse: 'Yellow House', activities: ['2nd CA Tests', 'Respect, communication and digital citizenship', ...ACADEMIC_WEEKLY_ACTIVITIES] },
@@ -170,6 +268,17 @@ const ACADEMIC_WEEKS: CalendarWeek[] = [
   { week: 12, dates: '7–11 Dec 2026', theme: 'Never Give Up', facilitator: 'Mrs. Olayinka', classHouse: '—', activities: ['1st Term Examination continues', 'Revision, resilience and support', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 13, dates: '14–18 Dec 2026', theme: 'Marking & Collation of Results', facilitator: 'Mr Abraham', classHouse: '—', activities: ['Marking and collation of results', 'Christmas Carol: Dec 15, 2026', 'Vacation begins: Dec 18, 2026', ...ACADEMIC_WEEKLY_ACTIVITIES] },
 ]
+
+const FACILITATOR_PHOTO: Record<string, string> = {
+  'Mrs. Olayinka': 'olayinka-mercy', // TODO: Confirm whether this is Olayinka Onipede.
+  'Mr Abraham': 'abraham-afolabi',
+  'Mr Abubakar R.O': 'abubakar-rasaq',
+  'Mr Ajiboye Abubakar': 'ajiboye-abiodun', // TODO: Confirm the facilitator's first name.
+  'Mrs. Henry Gift': 'henry-chioma', // TODO: Confirm the facilitator's first name.
+  'Mrs. Eunice Samuel': 'samuel-eunice',
+  'Mr. Ifefikayo Ogunlusi': 'ogunlusi-ifefikayomi',
+  'Mr. John Oderinde': 'oderinde-john',
+}
 
 const FACILITATOR_GUIDELINES = [
   'Prepare and present a short Monday message that reinforces the week\'s theme and the Word of the Day.',
@@ -263,9 +372,17 @@ function AcademicCalendar() {
                         </div>
                         <div className="rounded-2xl border border-line bg-white p-5">
                           <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-deep">Assigned</p>
-                          <div className="mt-4 border-b border-line pb-4">
-                            <p className="text-xs uppercase tracking-[0.14em] text-mute">Theme Facilitator</p>
-                            <p className="mt-1 font-display text-xl font-bold text-wine-900">{week.facilitator}</p>
+                          <div className="mt-4 flex items-center gap-4 border-b border-line pb-4">
+                            <StaffPhoto
+                              slug={FACILITATOR_PHOTO[week.facilitator]}
+                              name={week.facilitator}
+                              shape="circle"
+                              className="h-16 w-16 shrink-0 border-2 border-gold"
+                            />
+                            <div className="min-w-0">
+                              <p className="text-xs uppercase tracking-[0.14em] text-mute">Theme Facilitator</p>
+                              <p className="mt-1 font-display text-xl font-bold text-wine-900">{week.facilitator}</p>
+                            </div>
                           </div>
                           <div className="mt-4">
                             <p className="text-xs uppercase tracking-[0.14em] text-mute">Class / House</p>
