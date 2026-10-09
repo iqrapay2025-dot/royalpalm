@@ -504,6 +504,7 @@ export function Contact() {
                 <div className="flex flex-wrap gap-x-5 gap-y-1 pt-2 text-xs font-bold uppercase tracking-[0.18em] text-wine-900">
                   <a href={SCHOOL.facebook} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">Facebook</a>
                   <a href={SCHOOL.instagram} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">Instagram</a>
+                  <a href={SCHOOL.x} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">X</a>
                 </div>
               </div>
             </Reveal>
