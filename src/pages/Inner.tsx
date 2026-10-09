@@ -73,7 +73,6 @@ export function Facilities() {
       <PageHero eyebrow="Facilities" title="Take a tour of RICO." text="Everything a student needs to learn, live, play and heal on one campus." image={IMG.sports} />
       <Section tone="navy">
         <CardGrid items={FACILITIES} variant="facility" />
-        <p className="mt-10 text-center text-sm text-white/60">ICT Hub and School Clinic images are placeholders — photos to be supplied by the school.</p>
       </Section>
       <CtaBanner title="Book a campus visit." text="See our labs, hostels and arena in person." cta={{ label: 'Contact Us', to: '/contact' }} />
     </>
@@ -262,7 +261,7 @@ const ACADEMIC_WEEKS: CalendarWeek[] = [
   { week: 6, dates: '26–30 Oct 2026', theme: 'Rules Are Made to Protect You', facilitator: 'Mr. Wasiu Afolabi', classHouse: 'Year 12', activities: ['School rules and safe conduct review', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 7, dates: '2–6 Nov 2026', theme: 'Become a Solution, Not a Problem', facilitator: 'Mrs. Henry Gift', classHouse: 'Red House', activities: ['House-based problem-solving and service activities', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 8, dates: '9–13 Nov 2026', theme: 'Avoid Shortcut', facilitator: 'Mrs. Eunice Samuel', classHouse: 'Blue House', activities: ['Academic integrity and responsible decision-making', ...ACADEMIC_WEEKLY_ACTIVITIES] },
-  { week: 9, dates: '16–20 Nov 2026', theme: 'Hate Speech and Its Implication', facilitator: 'Mr. Abraham', classHouse: 'Yellow House', activities: ['2nd CA Tests', 'Respect, communication and digital citizenship', ...ACADEMIC_WEEKLY_ACTIVITIES] },
+  { week: 9, dates: '16–20 Nov 2026', theme: 'Hate Speech and Its Implication', facilitator: 'ABRAHAM, Afolabi', classHouse: 'Yellow House', activities: ['2nd CA Tests', 'Respect, communication and digital citizenship', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 10, dates: '23–27 Nov 2026', theme: 'Danger of Examination Malpractice', facilitator: 'Mr. Ifefikayo Ogunlusi', classHouse: 'Green House', activities: ['Exam conduct and ethical preparation', 'Visiting Day: Nov 28, 2026', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 11, dates: '30 Nov – 4 Dec 2026', theme: 'Start Early', facilitator: 'Mr. John Oderinde', classHouse: '—', activities: ['1st Term Examination begins Nov 26, 2026', 'Early preparation and revision routines', ...ACADEMIC_WEEKLY_ACTIVITIES] },
   { week: 12, dates: '7–11 Dec 2026', theme: 'Never Give Up', facilitator: 'Mrs. Olayinka', classHouse: '—', activities: ['1st Term Examination continues', 'Revision, resilience and support', ...ACADEMIC_WEEKLY_ACTIVITIES] },
@@ -272,8 +271,11 @@ const ACADEMIC_WEEKS: CalendarWeek[] = [
 const FACILITATOR_PHOTO: Record<string, string> = {
   'Mrs. Olayinka': 'olayinka-mercy', // TODO: Confirm whether this is Olayinka Onipede.
   'Mr Abraham': 'abraham-afolabi',
+  'ABRAHAM, Afolabi': 'abraham-afolabi',
   'Mr Abubakar R.O': 'abubakar-rasaq',
+  'Mr. Onipede Samson': 'onipede-samson',
   'Mr Ajiboye Abubakar': 'ajiboye-abiodun', // TODO: Confirm the facilitator's first name.
+  'Mr. Wasiu Afolabi': 'wasiu-afolabi',
   'Mrs. Henry Gift': 'henry-chioma', // TODO: Confirm the facilitator's first name.
   'Mrs. Eunice Samuel': 'samuel-eunice',
   'Mr. Ifefikayo Ogunlusi': 'ogunlusi-ifefikayomi',

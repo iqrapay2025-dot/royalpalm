@@ -3,10 +3,10 @@ import logo from '../assets/logo.jpg'
 import './intro-loader.css'
 
 const STORAGE_KEY = 'rico-intro-loader-shown'
-const MINIMUM_DURATION = 5500
-const EXIT_DURATION = 900
-const REDUCED_MOTION_DURATION = 1800
-const REDUCED_MOTION_EXIT_DURATION = 350
+const MINIMUM_DURATION = 650
+const EXIT_DURATION = 250
+const REDUCED_MOTION_DURATION = 200
+const REDUCED_MOTION_EXIT_DURATION = 100
 
 function hasPlayedIntro(): boolean {
   try {

@@ -135,6 +135,11 @@ export function Footer() {
             <li className="flex gap-3 pt-2">
               <a href={SCHOOL.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className={`${ico} hover:bg-gold hover:text-wine-950`}><Svg d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5c0-.3.2-.5.5-.5H14Z" /></a>
               <a href={SCHOOL.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className={`${ico} hover:bg-gold hover:text-wine-950`}><Svg d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.5-2.5h.01" /></a>
+              <a href={SCHOOL.x} target="_blank" rel="noreferrer" aria-label="X" className={`${ico} hover:bg-gold hover:text-wine-950`}>
+                <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true">
+                  <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.804-7.588-6.638 7.588H.47l8.6-9.83L0 1.153h7.594l5.246 6.932zm-1.291 19.49h2.039L6.486 3.24H4.298z" />
+                </svg>
+              </a>
             </li>
           </ul>
         </div>

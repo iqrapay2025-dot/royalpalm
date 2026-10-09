@@ -1,6 +1,12 @@
 import { useState } from 'react'
-import { STATS } from '../lib/data'
-import { CountUp, Reveal, SectionHeader } from './ui'
+import { ALUMNI, STATS } from '../lib/data'
+import { Button, CountUp, Reveal, SectionHeader } from './ui'
+
+const alumniPhotos = import.meta.glob('../assets/alumni/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>
 
 export function StatBar({ overlap = false }: { overlap?: boolean }) {
   return (
@@ -20,41 +26,44 @@ export function StatBar({ overlap = false }: { overlap?: boolean }) {
   )
 }
 
-const TESTIMONIALS = [
-  { quote: 'Parent testimonial placeholder — a real quote will be added once supplied by the school.', name: 'Parent name', role: 'Parent of RICO student' },
-  { quote: 'Student testimonial placeholder — a real quote will be added once supplied by the school.', name: 'Student name', role: 'Current student' },
-  { quote: 'Alumni testimonial placeholder — a real quote will be added once supplied by the school.', name: 'Alumnus name', role: 'RICO alumnus' },
-]
-
 export function Testimonials() {
   const [i, setI] = useState(0)
-  const n = TESTIMONIALS.length
+  const n = ALUMNI.length
   return (
     <div>
-      <SectionHeader eyebrow="Testimonials" title="Voices from the RICO family" />
+      <SectionHeader eyebrow="Alumni Stories" title="Outstanding Alumni" text="Become a Success Story. Join our community of students impacting the world." />
       <Reveal className="mx-auto mt-14 max-w-3xl">
-        <div className="relative overflow-hidden rounded-3xl border-2 border-dashed border-gold/60 bg-white p-6 text-center shadow-lg shadow-wine-900/5 sm:p-10 md:p-14">
-          <span className="font-display text-7xl leading-none text-gold">“</span>
+        <div className="relative overflow-hidden rounded-3xl border border-line bg-white p-6 shadow-lg shadow-wine-900/5 sm:p-10 md:p-14">
           <div className="grid">
-            {TESTIMONIALS.map((t, k) => (
-              <figure key={t.name} className={`col-start-1 row-start-1 transition-all duration-500 ${k === i ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-6 opacity-0'}`}>
-                <blockquote className="font-display text-xl font-medium leading-relaxed text-wine-900 md:text-2xl">{t.quote}</blockquote>
-                <figcaption className="mt-6 text-sm text-mute"><strong className="text-wine-900">{t.name}</strong> · {t.role}</figcaption>
+            {ALUMNI.map((alumnus, k) => (
+              <figure key={alumnus.name} aria-hidden={k !== i} className={`col-start-1 row-start-1 transition-all duration-500 ${k === i ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-6 opacity-0'}`}>
+                <div className="grid items-center gap-6 sm:grid-cols-[120px_minmax(0,1fr)]">
+                  <img src={alumniPhotos[`../assets/alumni/${alumnus.photo}.webp`]} alt={alumnus.name} loading="lazy" className="mx-auto h-28 w-28 rounded-full border-4 border-gold object-cover" />
+                  <div>
+                    <span aria-hidden="true" className="font-display text-6xl leading-none text-gold">“</span>
+                    <blockquote className="font-display text-lg font-medium leading-relaxed text-wine-900 md:text-xl">{alumnus.quote}</blockquote>
+                    <figcaption className="mt-5 text-sm text-mute"><strong className="text-wine-900">{alumnus.name}</strong> · {alumnus.role}</figcaption>
+                  </div>
+                </div>
               </figure>
             ))}
           </div>
-          <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-gold-deep">Placeholder · real quotes to be supplied by the school</p>
         </div>
         <div className="mt-8 flex items-center justify-center gap-5">
           <button aria-label="Previous testimonial" onClick={() => setI((i + n - 1) % n)} className="flex h-11 w-11 items-center justify-center rounded-full border border-wine-900/30 text-wine-900 transition-all hover:scale-110 hover:bg-wine-900 hover:text-white">←</button>
           <div className="flex gap-2">
-            {TESTIMONIALS.map((t, k) => (
-              <button key={t.name} aria-label={`Testimonial ${k + 1}`} onClick={() => setI(k)} className={`h-2.5 rounded-full transition-all duration-300 ${k === i ? 'w-8 bg-gold' : 'w-2.5 bg-wine-900/25 hover:bg-wine-900/60'}`} />
+            {ALUMNI.map((alumnus, k) => (
+              <button key={alumnus.name} type="button" aria-label={`Show testimonial from ${alumnus.name}`} aria-pressed={k === i} onClick={() => setI(k)} className={`h-2.5 rounded-full transition-all duration-300 ${k === i ? 'w-8 bg-gold' : 'w-2.5 bg-wine-900/25 hover:bg-wine-900/60'}`} />
             ))}
           </div>
           <button aria-label="Next testimonial" onClick={() => setI((i + 1) % n)} className="flex h-11 w-11 items-center justify-center rounded-full border border-wine-900/30 text-wine-900 transition-all hover:scale-110 hover:bg-wine-900 hover:text-white">→</button>
         </div>
       </Reveal>
+      <div className="mt-12 border-y border-gold/40 bg-white/70 px-5 py-8 text-center">
+        <p className="font-display text-2xl font-bold text-wine-900">Trusted by over 1000+ students</p>
+        <p className="mt-2 text-mute">Join our community of successful Students</p>
+        <Button href="http://bit.ly/RICOAdmissionForm" variant="navy">APPLY NOW!</Button>
+      </div>
     </div>
   )
 }

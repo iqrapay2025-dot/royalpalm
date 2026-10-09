@@ -1,3 +1,6 @@
+const ictStudents = new URL('../assets/DSC_6763.JPG', import.meta.url).href
+const ictClassroom = new URL('../assets/DSC_6761.JPG', import.meta.url).href
+
 const u = (id: string, w = 1200, h = 800) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
 
@@ -7,10 +10,10 @@ export const IMG = {
   classroom: ph('20251007_095806'),
   classroom2: ph('20251008_181545'),
   lab: ph('dsc_6766'),
-  ict: u('1719159381981-1327b22aff9b'),
+  ict: ictStudents,
   boarding: ph('dsc_6742'),
   sports: ph('1668146607606'),
-  clinic: u('1584432810601-6c7f27d2362b'),
+  clinic: ph('20251026_072338'),
   graduation: ph('20251007_135139'),
   graduation2: ph('20251014_165748'),
   career: ph('20251026_072338'),
@@ -32,6 +35,7 @@ export const SCHOOL = {
   email: 'royalpalmcollegeilorin@gmail.com',
   facebook: 'https://facebook.com/royalpalmrico',
   instagram: 'https://instagram.com/royalpalmintlcollege',
+  x: 'https://twitter.com/ROYALPALMCOLEGE?t=GMwr3tLMFytPi-1Tp9soUg&s=09',
 }
 
 export const NAV = [
@@ -50,6 +54,46 @@ export const STATS = [
   { value: 1500, suffix: '+', label: 'Active students' },
   { value: 4570, suffix: '+', label: 'Graduated alumni' },
   { value: 100, suffix: '+', label: 'Professional teachers' },
+]
+
+export type Alumni = {
+  name: string
+  role: string
+  photo: string
+  quote: string
+}
+
+export const ALUMNI: Alumni[] = [
+  {
+    name: 'Adekanye Ameera',
+    role: 'Ex- Student',
+    photo: 'adekanye-ameera',
+    quote: 'Walking through the doors of Royalpalm International College was one of the non-regretable decisions I made, because I mean why would I regret being privileged to pass through one of the most prestigious schools in Kwara state. My experience through...',
+  },
+  {
+    name: 'Shittu Ahmed',
+    role: 'Head Boy (Ex- Student)',
+    photo: 'shittu-ahmed',
+    quote: 'It has been a wonderful journey so far. I would like to congratulate the Class of 2021/2022 and everyone who was a part of this journey. It was an honour to have served this great college as the Head Boy....',
+  },
+  {
+    name: 'Saliu Jameela',
+    role: 'Head Girl (Ex- Student)',
+    photo: 'saliu-jameela',
+    quote: 'My journey at RICO was filled with ups and downs but I if I have to do it all over again, I will still choose this great citadel of learning. I feel honoured and blessed to have attended this institution....',
+  },
+  {
+    name: 'Jimoh Nana-Hauwa',
+    role: 'Ex-Student',
+    photo: 'jimoh-nana-hauwa',
+    quote: 'In RICO, I did not only find friends and opportunities, neither did I only get educated and motivated ,I also found a family,a family that truly accepted me for who I am and who I plan to be. Several times...',
+  },
+  {
+    name: 'Olanrewaju Sherif',
+    role: 'Ex-Student',
+    photo: 'olanrewaju-sherif',
+    quote: 'My name is Olanrewaju Sherif Bidemi, and I am now a student at the ICT University of Yaoude in Cameroon. I graduated from ROYALPALM INTERNATIONAL COLLEGE in the class of 2021. My time at ROYALPALM INTERNATIONAL COLLEGE was really great...',
+  },
 ]
 
 export const SLIDES = [
@@ -80,6 +124,7 @@ export type CardItem = {
   title: string
   text: string
   image?: string
+  images?: string[]
   eyebrow?: string
   meta?: string
   to?: string
@@ -110,9 +155,9 @@ export const TRACKS: CardItem[] = [
 ]
 
 export const FACILITIES: CardItem[] = [
-  { title: 'Air-conditioned Classrooms', text: 'Fully air-conditioned classrooms for focused learning.', image: IMG.classroom2 },
+  { title: 'Air-conditioned Classrooms', text: 'Fully air-conditioned classrooms for focused learning.', image: ictClassroom },
   { title: 'Science Laboratories', text: 'Ultra-modern Physics, Chemistry and Biology labs at international standard.', image: IMG.lab },
-  { title: 'ICT & Coding Hub', text: 'Hands-on coding and AI training; students have built their own software games.', image: IMG.ict },
+  { title: 'ICT & Coding Hub', text: 'Hands-on coding and AI training; students have built their own software games.', image: IMG.ict, images: [IMG.ict, ictClassroom] },
   { title: 'Boarding Facilities', text: 'Ensuite, highly secured hostels with a strict no-bullying zone policy.', image: IMG.boarding },
   { title: 'Sporting Arena', text: 'Mini-stadium with pavilion, football pitch, tennis, basketball and indoor courts.', image: IMG.sports },
   { title: 'School Clinic', text: 'On-site clinic managed by qualified healthcare staff.', image: IMG.clinic },

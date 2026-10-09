@@ -160,9 +160,15 @@ export function Card({ item, variant = 'program', index = 0 }: { item: CardItem;
     return (
       <Reveal delay={index * 70}>
         <Tilt className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-wine-900 transition-[transform,box-shadow] duration-200 ease-out hover:shadow-2xl hover:shadow-wine-900/25">
-          {item.image && (
+          {item.images?.length ? (
+            <div className="absolute inset-x-0 top-0 grid h-[68%] grid-rows-2 gap-1 overflow-hidden">
+              {item.images.map((image) => (
+                <img key={image} src={image} alt={item.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              ))}
+            </div>
+          ) : item.image ? (
             <img src={item.image} alt={item.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-          )}
+          ) : null}
           <div className="absolute inset-0 bg-gradient-to-t from-wine-950 via-wine-950/40 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-6">
             <div className="mb-3 h-0.5 w-8 gold-rule transition-all duration-300 group-hover:w-16" />
