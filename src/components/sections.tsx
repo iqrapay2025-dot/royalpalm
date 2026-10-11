@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ALUMNI, STATS } from '../lib/data'
+import { Link } from '../lib/router'
 import { Button, CountUp, Reveal, SectionHeader } from './ui'
 
 const alumniPhotos = import.meta.glob('../assets/alumni/*.webp', {
@@ -77,19 +78,20 @@ export function Testimonials() {
 
 export function EventsCalendar() {
   const rows = [
-    { tag: 'Flagship', title: 'RICO Annual Career Day', note: 'Date to be confirmed' },
-    { tag: 'Academic', title: 'Term dates and exam schedules', note: 'Academic calendar to be supplied by the school' },
-    { tag: 'Student Life', title: 'Role Reversal / Feedback Weeks', note: 'Date to be confirmed' },
+    { tag: 'Assessments', month: 'OCT', day: '12–16', title: '1st CA Tests', note: '2026 · Year 10 weekly programme' },
+    { tag: 'Academic', month: 'OCT', day: '21', title: 'Open Day / Mid-Term Reports', note: 'Mid-Term Break: Oct 21–23, 2026' },
+    { tag: 'Examinations', month: 'NOV', day: '26', title: '1st Term Examinations', note: 'Nov 26–Dec 11, 2026' },
   ]
   return (
     <div>
-      <SectionHeader eyebrow="Events & Calendar" title="What’s coming up" text="Calendar dates have not yet been supplied. Entries below are placeholders to be replaced." />
+      <SectionHeader eyebrow="Events & Calendar" title="What’s coming up" text="Selected dates from the 2026/2027 first-term academic calendar." />
       <div className="mx-auto mt-14 max-w-3xl divide-y divide-line overflow-hidden rounded-3xl border border-line bg-white">
         {rows.map((r, i) => (
           <Reveal key={r.title} delay={i * 80}>
             <div className="flex items-center gap-4 p-5 transition-colors sm:gap-6 sm:p-6 hover:bg-cream md:p-7">
               <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-wine-900 text-gold-light">
-                <span className="text-lg font-bold">TBC</span>
+                <span className="text-[10px] font-bold uppercase">{r.month}</span>
+                <span className="font-display text-sm font-bold leading-tight">{r.day}</span>
               </div>
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold-deep">{r.tag}</p>
@@ -100,6 +102,9 @@ export function EventsCalendar() {
           </Reveal>
         ))}
       </div>
+      <p className="mt-6 text-center">
+        <Link to="/academics#academic-calendar" className="text-sm font-semibold text-wine-900 transition-colors hover:text-gold-deep">View full academic calendar</Link>
+      </p>
     </div>
   )
 }
