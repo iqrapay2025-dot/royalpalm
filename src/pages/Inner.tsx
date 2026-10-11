@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Button, CardGrid, CtaBanner, PageHero, Placeholder, Reveal, Section, SectionHeader } from '../components/ui'
 import { EventsCalendar, StatBar } from '../components/sections'
 import { StaffPhoto } from '../components/StaffPhoto'
+import { WaecResults } from '../components/WaecResults'
 import { FACILITIES, IMG, INITIATIVES, NEWS, SCHOOL, STAFF, TRACKS, type StaffGroup, type StaffMember } from '../lib/data'
+import { Link } from '../lib/router'
 import calendarPdf from '../assets/1ST TERM 2026-2027 ACADEMIC SESSION CALENDER.pdf'
 
 export function About() {
@@ -32,6 +34,7 @@ export function About() {
             <SectionHeader align="left" eyebrow="The RICO Performance Record" title="Zero retakes since inception." />
             <p className="mt-6 text-lg leading-relaxed text-mute">No graduate has had to retake WAEC, NECO or UTME since the school’s inception.</p>
             <p className="mt-4 text-lg leading-relaxed text-mute">In the Class of 2026, 100% of 30 registered candidates achieved straight credit passes and above, including a clean sweep in English Language and Mathematics.</p>
+            <Link to="/academics#results" className="mt-4 inline-block font-semibold text-wine-900 transition-colors hover:text-gold-deep">See our results</Link>
           </Reveal>
           <Reveal delay={100}>
             <div className="overflow-hidden rounded-3xl bg-cream-deep"><img src={IMG.grads} alt="RICO students and guests at a school event" className="aspect-[4/3] w-full object-cover" /></div>
@@ -61,6 +64,7 @@ export function Academics() {
         <SectionHeader eyebrow="Core Tracks" title="Science, Arts, Entrepreneurship" />
         <CardGrid items={TRACKS.map((t) => ({ ...t, to: undefined }))} variant="program" />
       </Section>
+      <WaecResults />
       <AcademicCalendar />
       <Section><EventsCalendar /></Section>
     </>

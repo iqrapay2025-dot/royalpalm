@@ -2,10 +2,10 @@ import { useEffect, type AnchorHTMLAttributes } from 'react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 export function useRoute() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
-  }, [pathname])
+    if (!hash) window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }, [pathname, hash])
   return pathname || '/'
 }
 

@@ -35,18 +35,25 @@ export function Testimonials() {
       <Reveal className="mx-auto mt-14 max-w-3xl">
         <div className="relative overflow-hidden rounded-3xl border border-line bg-white p-6 shadow-lg shadow-wine-900/5 sm:p-10 md:p-14">
           <div className="grid">
-            {ALUMNI.map((alumnus, k) => (
-              <figure key={alumnus.name} aria-hidden={k !== i} className={`col-start-1 row-start-1 transition-all duration-500 ${k === i ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-6 opacity-0'}`}>
-                <div className="grid items-center gap-6 sm:grid-cols-[120px_minmax(0,1fr)]">
-                  <img src={alumniPhotos[`../assets/alumni/${alumnus.photo}.webp`]} alt={alumnus.name} loading="lazy" className="mx-auto h-28 w-28 rounded-full border-4 border-gold object-cover" />
-                  <div>
-                    <span aria-hidden="true" className="font-display text-6xl leading-none text-gold">“</span>
-                    <blockquote className="font-display text-lg font-medium leading-relaxed text-wine-900 md:text-xl">{alumnus.quote}</blockquote>
-                    <figcaption className="mt-5 text-sm text-mute"><strong className="text-wine-900">{alumnus.name}</strong> · {alumnus.role}</figcaption>
+            {ALUMNI.map((alumnus, k) => {
+              const photo = alumniPhotos[`../assets/alumni/${alumnus.photo}.webp`]
+              return (
+                <figure key={alumnus.name} aria-hidden={k !== i} className={`col-start-1 row-start-1 transition-all duration-500 ${k === i ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-6 opacity-0'}`}>
+                  <div className="grid items-center gap-6 sm:grid-cols-[120px_minmax(0,1fr)]">
+                    {photo ? (
+                      <img src={photo} alt={alumnus.name} loading="lazy" className="mx-auto h-28 w-28 rounded-full border-4 border-gold object-cover" />
+                    ) : (
+                      <div role="img" aria-label={alumnus.name} className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border-4 border-gold bg-wine-900 font-display text-3xl font-bold text-gold-light">PH</div>
+                    )}
+                    <div>
+                      <span aria-hidden="true" className="font-display text-6xl leading-none text-gold">“</span>
+                      <blockquote className="font-display text-lg font-medium leading-relaxed text-wine-900 md:text-xl">{alumnus.quote}</blockquote>
+                      <figcaption className="mt-5 text-sm text-mute"><strong className="text-wine-900">{alumnus.name}</strong> · {alumnus.role}</figcaption>
+                    </div>
                   </div>
-                </div>
-              </figure>
-            ))}
+                </figure>
+              )
+            })}
           </div>
         </div>
         <div className="mt-8 flex items-center justify-center gap-5">

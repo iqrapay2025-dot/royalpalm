@@ -94,6 +94,12 @@ export const ALUMNI: Alumni[] = [
     photo: 'olanrewaju-sherif',
     quote: 'My name is Olanrewaju Sherif Bidemi, and I am now a student at the ICT University of Yaoude in Cameroon. I graduated from ROYALPALM INTERNATIONAL COLLEGE in the class of 2021. My time at ROYALPALM INTERNATIONAL COLLEGE was really great...',
   },
+  {
+    name: 'FULL NAME HERE',
+    role: 'Pioneer Headboy (Ex-Student)',
+    photo: 'pioneer-headboy',
+    quote: 'As a first class graduate of Aeronautical and Astronautical Engineering, I have Royalpalm International College to thank for a lot of my achievements. As the Pioneer Headboy, I built resilience, sharper communication and problem-solving skills. RICO was where my character was built and my fondest memories were made.',
+  },
 ]
 
 export const SLIDES = [

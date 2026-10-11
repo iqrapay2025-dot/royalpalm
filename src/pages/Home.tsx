@@ -2,6 +2,7 @@ import HeroSlider from '../components/HeroSlider'
 import { Button, CardGrid, CtaBanner, Reveal, Section, SectionHeader } from '../components/ui'
 import { EventsCalendar, Marquee, StatBar, Testimonials } from '../components/sections'
 import { FACILITIES, IMG, NEWS, SCHOOL, TRACKS } from '../lib/data'
+import { Link } from '../lib/router'
 
 export default function Home() {
   return (
@@ -45,6 +46,9 @@ export default function Home() {
       <Section tone="cream">
         <SectionHeader eyebrow="Core Tracks" title="Three paths to excellence" text="Science, Arts and Entrepreneurship — each designed to prepare champions for local and international leadership." />
         <CardGrid items={TRACKS} variant="program" />
+        <div className="mt-8 text-center">
+          <Link to="/academics#results" className="font-semibold text-wine-900 transition-colors hover:text-gold-deep">See WAEC results →</Link>
+        </div>
       </Section>
 
       <Section tone="navy">
