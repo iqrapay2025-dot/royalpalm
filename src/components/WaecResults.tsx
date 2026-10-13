@@ -11,6 +11,7 @@ import {
   type WaecYear,
 } from '../lib/waecResults'
 
+const SCHOOL_CENTRE = 'Royal Palm International College, Ilorin'
 const ENGLISH = 'English Language'
 const MATHS = 'General Mathematics'
 const evidencePhotos = Object.entries(import.meta.glob('../assets/waec-evidence/*.webp', {
@@ -53,7 +54,7 @@ function summarise(data: WaecYear) {
   }
 }
 
-const EVIDENCE_YEARS = [2025, 2026].filter((y) => evidencePhotos.some(([p]) => p.includes(`/waec-${y}-`)))
+const EVIDENCE_YEARS = [2026].filter((y) => evidencePhotos.some(([p]) => p.includes(`/waec-${y}-`)))
 
 function EvidenceSwiper({ year, photos }: { year: number; photos: [string, string][] }) {
   const trackRef = useRef<HTMLDivElement>(null)
@@ -101,6 +102,9 @@ function EvidenceSwiper({ year, photos }: { year: number; photos: [string, strin
                   loading="lazy"
                   className="aspect-[13/5] w-full object-contain"
                 />
+                <figcaption className="border-t border-line bg-cream px-3 py-2 text-center text-xs font-semibold text-wine-900">
+                  WASSCE {year} · {SCHOOL_CENTRE}
+                </figcaption>
               </figure>
             ))}
           </div>
@@ -156,7 +160,6 @@ function EvidenceTabs() {
           </button>
         ))}
       </div>
-      {active === 2026 && <p className="mt-3 text-sm text-mute">These source excerpts are separate from the 2025 statistics above.</p>}
       <EvidenceSwiper key={active} year={active} photos={photos} />
     </div>
   )
@@ -241,7 +244,7 @@ export function WaecResults() {
 
       <div className="mt-12">
         <h3 className="font-display text-2xl font-bold text-wine-900">WAEC result evidence</h3>
-        <p className="mt-2 text-sm leading-relaxed text-mute">Source screenshots are redacted to omit candidate and card details. The 2025 Computer Studies rows are omitted while that result remains outstanding.</p>
+        <p className="mt-2 text-sm leading-relaxed text-mute">Source screenshots are redacted to omit candidate and card details. Each excerpt is labelled with the centre name.</p>
         <EvidenceTabs />
 
       </div>

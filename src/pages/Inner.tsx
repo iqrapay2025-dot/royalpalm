@@ -100,14 +100,19 @@ type StaffFilter = 'all' | StaffGroup
 const STAFF_FILTERS: { value: StaffFilter; label: string }[] = [
   { value: 'all', label: 'All' },
   { value: 'management', label: 'Management' },
-  { value: 'academic', label: 'Academic Leadership' },
   { value: 'teachers', label: 'Teachers' },
   { value: 'welfare', label: 'Student Welfare & Support' },
 ]
 
+const MANAGEMENT_TIERS: { label: string; slugs: string[] }[] = [
+  { label: 'General Manager', slugs: ['abdullahi-adam'] },
+  { label: 'Assistant General Managers', slugs: ['alabi-oladimeji', 'adeyemi-tosin'] },
+  { label: 'Principal', slugs: ['adeoye-olatunbosun'] },
+  { label: 'Heads of Department', slugs: ['abisoye-titilayo', 'agbaje-amos', 'ola-subair-fatima', 'oluribido-mike', 'israel-bukky'] },
+  { label: 'Coordinators & Administration', slugs: ['atolagbe-adebukola', 'ayanlere-nurudeen', 'olanrewaju-samson', 'babatunde-sherifat', 'haruna-zakariyah', 'omolere-vincent'] },
+]
+
 const STAFF_GROUPS: { value: StaffGroup; label: string }[] = [
-  { value: 'management', label: 'Management' },
-  { value: 'academic', label: 'Academic Leadership' },
   { value: 'teachers', label: 'Teachers' },
   { value: 'welfare', label: 'Student Welfare & Support' },
 ]
@@ -134,7 +139,6 @@ function StaffDirectoryCard({ person, index, compact }: { person: StaffMember; i
 export function Leadership() {
   const [activeFilter, setActiveFilter] = useState<StaffFilter>('all')
   const [showAllWelfare, setShowAllWelfare] = useState(false)
-  const managementLead = STAFF.find((person) => person.slug === 'abdullahi-adam')
   const groups = STAFF_GROUPS.filter((group) => activeFilter === 'all' || group.value === activeFilter)
 
   return (
@@ -158,21 +162,32 @@ export function Leadership() {
           ))}
         </div>
 
-        {managementLead && (activeFilter === 'all' || activeFilter === 'management') && (
-          <article className="mt-12 overflow-hidden rounded-3xl border border-line bg-white md:grid md:grid-cols-2">
-            <StaffPhoto slug={managementLead.photoSlug ?? managementLead.slug} name={managementLead.name} shape="portrait" className="w-full" />
-            <div className="flex flex-col justify-center p-7 md:p-10">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">{managementLead.role}</p>
-              <h2 className="mt-3 font-display text-3xl font-bold text-wine-900 md:text-4xl">{managementLead.name}</h2>
+        {(activeFilter === 'all' || activeFilter === 'management') && (
+          <div className="mt-12">
+            <h2 className="text-center text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">Management Team</h2>
+            <div className="mt-8 flex flex-col items-center">
+              {MANAGEMENT_TIERS.map((tier, t) => {
+                const members = tier.slugs.map((slug) => STAFF.find((person) => person.slug === slug)).filter((person): person is StaffMember => !!person)
+                return (
+                  <div key={tier.label} className="flex w-full flex-col items-center">
+                    {t > 0 && <div className="h-8 w-px bg-gold-deep/60" aria-hidden="true" />}
+                    <div className="flex w-full flex-wrap justify-center gap-6">
+                      {members.map((person, index) => (
+                        <div key={person.slug} className={t === 0 ? 'w-64' : 'w-44 sm:w-52'}>
+                          <StaffDirectoryCard person={person} index={index} compact={false} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-          </article>
+          </div>
         )}
 
         <div key={activeFilter} className="mt-14 space-y-14">
           {groups.map((group) => {
-            const people = STAFF.filter((person) =>
-              person.group === group.value && !(group.value === 'management' && person.slug === 'abdullahi-adam'),
-            )
+            const people = STAFF.filter((person) => person.group === group.value)
             const compact = group.value === 'teachers' || group.value === 'welfare'
             const shownPeople = group.value === 'welfare' && !showAllWelfare ? people.slice(0, 10) : people
 
