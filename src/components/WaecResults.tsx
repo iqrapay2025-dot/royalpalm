@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Section, SectionHeader } from './ui'
 import {
   GRADE_KEY,
@@ -13,6 +13,12 @@ import {
 
 const ENGLISH = 'English Language'
 const MATHS = 'General Mathematics'
+const evidencePhotos = Object.entries(import.meta.glob('../assets/waec-evidence/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>)
+  .sort(([a], [b]) => a.localeCompare(b))
 
 const chip: Record<GradeBucket, string> = {
   A: 'bg-gold text-wine-950',
@@ -45,6 +51,115 @@ function summarise(data: WaecYear) {
     englishAndMaths: data.candidates.filter((c) => hasCredit(c, ENGLISH) && hasCredit(c, MATHS)).length,
     bySubject,
   }
+}
+
+const EVIDENCE_YEARS = [2025, 2026].filter((y) => evidencePhotos.some(([p]) => p.includes(`/waec-${y}-`)))
+
+function EvidenceSwiper({ year, photos }: { year: number; photos: [string, string][] }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+  const PER_SLIDE = 4
+  const pages: [string, string][][] = []
+  for (let k = 0; k < photos.length; k += PER_SLIDE) pages.push(photos.slice(k, k + PER_SLIDE))
+
+  const goTo = (i: number) => {
+    const el = trackRef.current
+    if (!el) return
+    const next = Math.max(0, Math.min(pages.length - 1, i))
+    el.scrollTo({ left: next * el.clientWidth, behavior: 'smooth' })
+    setIndex(next)
+  }
+
+  const onScroll = () => {
+    const el = trackRef.current
+    if (!el || !el.clientWidth) return
+    setIndex(Math.round(el.scrollLeft / el.clientWidth))
+  }
+
+  const btn =
+    'flex h-10 w-10 items-center justify-center rounded-full bg-wine-900 text-white transition-colors hover:bg-wine-950 disabled:cursor-not-allowed disabled:opacity-30'
+
+  return (
+    <div className="mx-auto mt-4 max-w-3xl" role="region" aria-roledescription="carousel" aria-label={`${year} result excerpts`}>
+      <div
+        ref={trackRef}
+        onScroll={onScroll}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowRight') goTo(index + 1)
+          if (e.key === 'ArrowLeft') goTo(index - 1)
+        }}
+        className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth rounded-xl border border-line bg-white [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {pages.map((page, pi) => (
+          <div key={pi} className="grid w-full shrink-0 snap-center grid-cols-1 gap-3 p-3 sm:grid-cols-2">
+            {page.map(([path, src], j) => (
+              <figure key={path} className="overflow-hidden rounded-lg border border-line">
+                <img
+                  src={src}
+                  alt={`Redacted ${year} WAEC result excerpt ${pi * PER_SLIDE + j + 1}`}
+                  loading="lazy"
+                  className="aspect-[13/5] w-full object-contain"
+                />
+              </figure>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-4">
+        <button type="button" className={btn} onClick={() => goTo(index - 1)} disabled={index === 0} aria-label="Previous result">
+          ‹
+        </button>
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
+            {pages.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Go to result ${i + 1}`}
+                aria-current={i === index}
+                className={`h-2.5 rounded-full transition-all ${i === index ? 'w-6 bg-wine-900' : 'w-2.5 bg-line hover:bg-gold'}`}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-mute">{index + 1} / {pages.length}</span>
+        </div>
+        <button type="button" className={btn} onClick={() => goTo(index + 1)} disabled={index === pages.length - 1} aria-label="Next result">
+          ›
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function EvidenceTabs() {
+  const [active, setActive] = useState(EVIDENCE_YEARS[0])
+  if (EVIDENCE_YEARS.length === 0) return null
+  const photos = evidencePhotos.filter(([p]) => p.includes(`/waec-${active}-`))
+
+  return (
+    <div className="mt-8">
+      <div role="tablist" aria-label="Result year" className="flex gap-2 border-b border-line">
+        {EVIDENCE_YEARS.map((y) => (
+          <button
+            key={y}
+            type="button"
+            role="tab"
+            aria-selected={active === y}
+            onClick={() => setActive(y)}
+            className={`-mb-px rounded-t-lg border-b-2 px-6 py-2 text-sm font-semibold transition-colors ${
+              active === y ? 'border-wine-900 text-wine-900' : 'border-transparent text-mute hover:text-wine-900'
+            }`}
+          >
+            {y}
+          </button>
+        ))}
+      </div>
+      {active === 2026 && <p className="mt-3 text-sm text-mute">These source excerpts are separate from the 2025 statistics above.</p>}
+      <EvidenceSwiper key={active} year={active} photos={photos} />
+    </div>
+  )
 }
 
 export function WaecResults() {
@@ -122,6 +237,13 @@ export function WaecResults() {
             )
           })}
         </ul>
+      </div>
+
+      <div className="mt-12">
+        <h3 className="font-display text-2xl font-bold text-wine-900">WAEC result evidence</h3>
+        <p className="mt-2 text-sm leading-relaxed text-mute">Source screenshots are redacted to omit candidate and card details. The 2025 Computer Studies rows are omitted while that result remains outstanding.</p>
+        <EvidenceTabs />
+
       </div>
 
       <details className="mt-10 rounded-2xl border border-line bg-white px-5 py-4 shadow-sm">

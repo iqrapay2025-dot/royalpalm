@@ -117,7 +117,7 @@ function StaffDirectoryCard({ person, index, compact }: { person: StaffMember; i
     <Reveal delay={Math.min(index * 45, 300)} className="h-full">
       <article className="flex h-full flex-col items-center overflow-hidden rounded-3xl border border-line bg-white p-5 text-center">
         <StaffPhoto
-          slug={person.slug}
+          slug={person.photoSlug ?? person.slug}
           name={person.name}
           shape={compact ? 'circle' : 'portrait'}
           className={compact ? 'h-24 w-24 border-2 border-gold' : 'w-full'}
@@ -134,7 +134,7 @@ function StaffDirectoryCard({ person, index, compact }: { person: StaffMember; i
 export function Leadership() {
   const [activeFilter, setActiveFilter] = useState<StaffFilter>('all')
   const [showAllWelfare, setShowAllWelfare] = useState(false)
-  const principal = STAFF.find((person) => person.slug === 'adeoye-olatunbosun')
+  const managementLead = STAFF.find((person) => person.slug === 'abdullahi-adam')
   const groups = STAFF_GROUPS.filter((group) => activeFilter === 'all' || group.value === activeFilter)
 
   return (
@@ -158,12 +158,12 @@ export function Leadership() {
           ))}
         </div>
 
-        {principal && (activeFilter === 'all' || activeFilter === 'management') && (
+        {managementLead && (activeFilter === 'all' || activeFilter === 'management') && (
           <article className="mt-12 overflow-hidden rounded-3xl border border-line bg-white md:grid md:grid-cols-2">
-            <StaffPhoto slug={principal.slug} name={principal.name} shape="portrait" className="w-full" />
+            <StaffPhoto slug={managementLead.photoSlug ?? managementLead.slug} name={managementLead.name} shape="portrait" className="w-full" />
             <div className="flex flex-col justify-center p-7 md:p-10">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">{principal.role}</p>
-              <h2 className="mt-3 font-display text-3xl font-bold text-wine-900 md:text-4xl">{principal.name}</h2>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">{managementLead.role}</p>
+              <h2 className="mt-3 font-display text-3xl font-bold text-wine-900 md:text-4xl">{managementLead.name}</h2>
             </div>
           </article>
         )}
@@ -171,7 +171,7 @@ export function Leadership() {
         <div key={activeFilter} className="mt-14 space-y-14">
           {groups.map((group) => {
             const people = STAFF.filter((person) =>
-              person.group === group.value && !(group.value === 'management' && person.slug === 'adeoye-olatunbosun'),
+              person.group === group.value && !(group.value === 'management' && person.slug === 'abdullahi-adam'),
             )
             const compact = group.value === 'teachers' || group.value === 'welfare'
             const shownPeople = group.value === 'welfare' && !showAllWelfare ? people.slice(0, 10) : people
@@ -199,9 +199,6 @@ export function Leadership() {
           })}
         </div>
 
-        <div className="mx-auto mt-14 max-w-3xl">
-          <Placeholder>More teachers and staff will be added as photos are supplied.</Placeholder>
-        </div>
       </Section>
     </>
   )
@@ -435,7 +432,10 @@ export function Admissions() {
         <div className="grid gap-14 lg:grid-cols-2">
           <Reveal>
             <SectionHeader align="left" eyebrow="Enrolment" title="How to apply" />
-            <div className="mt-8"><Placeholder>The enrolment process has not yet been supplied. Please contact the school for current requirements.</Placeholder></div>
+            <div className="mt-8">
+              <p className="text-mute">To apply, please contact the school to obtain the admission form. Please note that the admission form is paid for.</p>
+              <Link to="/contact" className="mt-4 inline-block font-semibold text-wine-900 transition-colors hover:text-gold-deep">Contact the school</Link>
+            </div>
           </Reveal>
           <Reveal delay={100}>
             <SectionHeader align="left" eyebrow="Options" title="Day or boarding" />
@@ -509,6 +509,8 @@ export function Contact() {
                   <a href={SCHOOL.facebook} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">Facebook</a>
                   <a href={SCHOOL.instagram} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">Instagram</a>
                   <a href={SCHOOL.x} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">X</a>
+                  <a href={SCHOOL.whatsapp} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">WhatsApp</a>
+                  <a href={SCHOOL.tiktok} target="_blank" rel="noreferrer" className="transition-colors hover:text-gold-deep">TikTok</a>
                 </div>
               </div>
             </Reveal>

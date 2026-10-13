@@ -1,5 +1,7 @@
 const ictStudents = new URL('../assets/DSC_6763.JPG', import.meta.url).href
 const ictClassroom = new URL('../assets/DSC_6761.JPG', import.meta.url).href
+const classOf2026 = new URL('../assets/class-of-2026.webp', import.meta.url).href
+const entrepreneurship = new URL('../assets/entrepreneurship-vocational.webp', import.meta.url).href
 
 const u = (id: string, w = 1200, h = 800) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
@@ -13,10 +15,10 @@ export const IMG = {
   ict: ictStudents,
   boarding: ph('dsc_6742'),
   sports: ph('1668146607606'),
-  clinic: ph('20251026_072338'),
+  clinic: ph('school-clinic'),
   graduation: ph('20251007_135139'),
   graduation2: ph('20251014_165748'),
-  career: ph('20251026_072338'),
+  career: ph('career-day'),
   mentor: ph('20251007_135025'),
   lecture: ph('20251006_132243'),
   grads: ph('20251026_100425'),
@@ -25,7 +27,7 @@ export const IMG = {
 export const SCHOOL = {
   name: 'Royalpalm International College',
   short: 'RICO',
-  motto: 'Raising Kings and Queens through Excellence',
+  motto: 'Effective Education, Assured Future',
   tagline: 'Effective Education, Assured Future',
   vision: 'Educating leaders for God, Country, and Society',
   mission:
@@ -36,6 +38,8 @@ export const SCHOOL = {
   facebook: 'https://facebook.com/royalpalmrico',
   instagram: 'https://instagram.com/royalpalmintlcollege',
   x: 'https://twitter.com/ROYALPALMCOLEGE?t=GMwr3tLMFytPi-1Tp9soUg&s=09',
+  whatsapp: 'https://wa.me/message/N46BVV6TMZGDM1',
+  tiktok: 'https://tiktok.com/@ricoilorin?_r=1&_t=ZS-9ATU16FElPt',
 }
 
 export const NAV = [
@@ -106,7 +110,7 @@ export const SLIDES = [
   {
     image: IMG.graduation,
     eyebrow: 'Co-educational Day & Boarding College',
-    title: 'Raising Kings and Queens through Excellence',
+    title: 'Effective Education, Assured Future',
     text: 'An elite, co-educational institution providing world-class education at an affordable price, since July 14, 2018.',
     cta: { label: 'Request Info', to: '/admissions' },
   },
@@ -118,7 +122,7 @@ export const SLIDES = [
     cta: { label: 'Explore Academics', to: '/academics' },
   },
   {
-    image: IMG.sports,
+    image: classOf2026,
     eyebrow: 'Class of 2026',
     title: '100% straight credits and above.',
     text: 'All 30 registered candidates passed with credits and above, including a clean sweep in English Language and Mathematics.',
@@ -180,7 +184,7 @@ export const INITIATIVES: CardItem[] = [
     eyebrow: 'Vocational',
     title: 'Entrepreneurship & Vocational Program',
     text: 'Financial management, cooking and independent budgeting taught as real-world skills.',
-    image: IMG.mentor,
+    image: entrepreneurship,
   },
   {
     eyebrow: 'Leadership',
@@ -203,24 +207,25 @@ export type StaffMember = {
   name: string
   role: string
   group: StaffGroup
+  photoSlug?: string
   bio?: string
   image?: string
 }
 
 export const STAFF: StaffMember[] = [
+  { slug: 'abdullahi-adam', name: 'Abdullahi Adam', role: 'Management Team Lead', group: 'management', photoSlug: 'abdullahi-adam' },
   { slug: 'adeoye-olatunbosun', name: 'Olatunbosun Adeoye', role: 'Principal', group: 'management', bio: 'Leads RICO’s academic and pastoral vision.', image: '/photos/principal.png' },
   { slug: 'adeyemi-tosin', name: 'Tosin Adeyemi', role: 'AGM Logistics', group: 'management' },
   { slug: 'alabi-oladimeji', name: 'Oladimeji Alabi', role: 'AGM Finance', group: 'management' },
   { slug: 'omolere-vincent', name: 'Vincent Omolere', role: 'Admin Manager & PRO', group: 'management' },
   { slug: 'olanrewaju-samson', name: 'Samson Olanrewaju', role: 'College Secretary', group: 'management' },
-  { slug: 'samuel-eunice', name: 'Eunice Samuel', role: 'ICT Manager', group: 'management' },
   { slug: 'abisoye-titilayo', name: 'Titilayo Abisoye', role: 'HOD, Arts and Languages', group: 'academic' },
   { slug: 'ola-subair-fatima', name: 'Fatima Ola-Subair', role: 'HOD, Sciences', group: 'academic' },
   { slug: 'agbaje-amos', name: 'Amos Agbaje', role: 'HOD, Social Sciences', group: 'academic' },
   { slug: 'oluribido-mike', name: 'Mike Oluribido', role: 'HOD, Special Duties & Sports Director', group: 'academic', bio: 'Directs the sporting arena and athletics programmes.', image: '/photos/sports-director.jpg' },
   { slug: 'atolagbe-adebukola', name: 'Adebukola Atolagbe', role: 'Coordinator, Junior Secondary School', group: 'academic' },
   { slug: 'ayanlere-nurudeen', name: 'Nurudeen Ayanlere', role: 'Asst. Coordinator, Junior Secondary School', group: 'academic' },
-  { slug: 'hassan-afolabi', name: 'Afolabi Hassan', role: 'Economics & Commerce', group: 'teachers' },
+  { slug: 'hassan-afolabi', name: 'Afolabi Hassan', role: 'Economics & Commerce', group: 'teachers', photoSlug: 'wasiu-afolabi' },
   { slug: 'olayinka-mercy', name: 'Mercy Olayinka', role: 'English Language & Literature-in-English', group: 'teachers' },
   { slug: 'henry-chioma', name: 'Chioma Henry', role: 'English & Literature-in-English', group: 'teachers' },
   { slug: 'atabofack-thomas', name: 'Thomas Atabofack', role: 'French', group: 'teachers' },
@@ -229,12 +234,12 @@ export const STAFF: StaffMember[] = [
   { slug: 'abraham-afolabi', name: 'Afolabi Abraham', role: 'Horticulture', group: 'teachers' },
   { slug: 'oderinde-john', name: 'John Oderinde', role: 'TD & Mathematics', group: 'teachers' },
   { slug: 'ajiboye-abiodun', name: 'Abiodun Ajiboye', role: 'Chemistry & Mathematics', group: 'teachers' },
-  { slug: 'onipede-olayinka', name: 'Olayinka Onipede', role: 'Geography & Tourism', group: 'teachers' },
+  { slug: 'onipede-olayinka', name: 'Olayinka Onipede', role: 'Geography & Tourism', group: 'teachers', photoSlug: 'onipede-samson' },
   { slug: 'ishola-kehinde', name: 'Kehinde Ishola', role: 'Environmentalist', group: 'teachers' },
   { slug: 'tsado-felicia', name: 'Felicia Tsado', role: 'Environmentalist', group: 'teachers' },
   { slug: 'ishola-olaoluwa', name: 'Olaoluwa Ishola', role: 'Hostel Master', group: 'welfare' },
   { slug: 'folayan-segun', name: 'Segun Folayan', role: 'Security Officer & Asst. Hostel Master', group: 'welfare' },
-  { slug: 'babatunde-sherifat', name: 'Sherifat Babatunde', role: 'Matron & College Nurse', group: 'welfare' },
+  { slug: 'babatunde-sherifat', name: 'Sherifat Babatunde', role: 'Matron & College Nurse', group: 'management' },
   { slug: 'oladele-oyinlola', name: 'Oyinlola Oladele', role: 'Asst. Matron & College Nurse', group: 'welfare' },
   { slug: 'adeyi-grace', name: 'Grace Adeyi', role: 'College Chef', group: 'welfare' },
   { slug: 'zaccheus-sarah', name: 'Sarah Zaccheus', role: 'Kitchen Staff', group: 'welfare' },
@@ -242,7 +247,7 @@ export const STAFF: StaffMember[] = [
   { slug: 'sulyman-yetunde', name: 'Yetunde Sulyman', role: 'Tuckshop Attendant & Kitchen Staff', group: 'welfare' },
   { slug: 'jimoh-kuburah', name: 'Kuburah Jimoh', role: 'Bus Assistant & Kitchen Staff', group: 'welfare' },
   { slug: 'zakariyawu-alhassan', name: 'Alhassan Zakariyawu', role: 'Chief Transport Officer', group: 'welfare' },
-  { slug: 'haruna-zakariyah', name: 'Zakariyah Haruna', role: 'CSO, Maintenance', group: 'welfare' },
+  { slug: 'haruna-zakariyah', name: 'Zakariyah Haruna', role: 'CSO, Maintenance', group: 'management' },
   { slug: 'mohammed-mohammed', name: 'Mohammed Mohammed', role: 'Technical Officer & Security Supervisor', group: 'welfare' },
   { slug: 'joshua-philip', name: 'Philip Joshua', role: 'Security Officer', group: 'welfare' },
   { slug: 'olateju-jamiu', name: 'Jamiu Olateju', role: 'Security Officer', group: 'welfare' },
