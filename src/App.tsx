@@ -4,6 +4,7 @@ import { Footer, Header, ScrollTop } from './components/Layout'
 import { IntroLoader } from './components/IntroLoader'
 import { useRoute } from './lib/router'
 import Home from './pages/Home'
+import Gallery from './pages/Gallery'
 import { About, Academics, Admissions, Contact, Facilities, Leadership, StudentLife } from './pages/Inner'
 
 const ROUTES: Record<string, () => React.ReactElement> = {
@@ -15,6 +16,7 @@ const ROUTES: Record<string, () => React.ReactElement> = {
   '/leadership': Leadership,
   '/admissions': Admissions,
   '/contact': Contact,
+  '/gallery': Gallery,
 }
 
 function ScrollToHash() {

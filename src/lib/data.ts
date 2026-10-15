@@ -48,13 +48,27 @@ export const SCHOOL = {
   tiktok: 'https://tiktok.com/@ricoilorin?_r=1&_t=ZS-9ATU16FElPt',
 }
 
-export const NAV = [
+export type NavLink = { to: string; label: string }
+export type NavItem = NavLink | { label: string; children: NavLink[] }
+
+export const NAV: NavItem[] = [
   { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
+  {
+    label: 'About',
+    children: [
+      { to: '/about', label: 'About RICO' },
+      { to: '/leadership', label: 'Leadership' },
+    ],
+  },
   { to: '/academics', label: 'Academics' },
-  { to: '/facilities', label: 'Facilities' },
-  { to: '/student-life', label: 'Student Life' },
-  { to: '/leadership', label: 'Leadership' },
+  {
+    label: 'Campus Life',
+    children: [
+      { to: '/facilities', label: 'Facilities' },
+      { to: '/student-life', label: 'Student Life' },
+      { to: '/gallery', label: 'Gallery' },
+    ],
+  },
   { to: '/admissions', label: 'Admissions' },
   { to: '/contact', label: 'Contact' },
 ]

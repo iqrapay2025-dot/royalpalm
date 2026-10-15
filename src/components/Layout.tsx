@@ -6,6 +6,7 @@ import { Button } from './ui'
 
 export function Header({ route }: { route: string }) {
   const [open, setOpen] = useState(false)
+  const [menu, setMenu] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -35,7 +36,23 @@ export function Header({ route }: { route: string }) {
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
   }, [])
-  useEffect(() => setOpen(false), [route])
+  useEffect(() => { setOpen(false); setMenu(null) }, [route])
+  useEffect(() => {
+    if (!menu) return
+    const onDown = (e: MouseEvent) => {
+      const target = e.target as Element | null
+      if (!target?.closest?.('[data-nav-dropdown]')) setMenu(null)
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenu(null)
+    }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [menu])
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     const close = () => window.innerWidth >= 1024 && setOpen(false)
@@ -68,12 +85,47 @@ export function Header({ route }: { route: string }) {
           </Link>
           <nav className="hidden items-center gap-1 lg:flex xl:gap-2" aria-label="Main">
             {NAV.map((n) => {
-              const active = route === n.to
+              if (!('children' in n)) {
+                const active = route === n.to
+                return (
+                  <Link key={n.to} to={n.to} className={`nav-link group px-3 py-2 text-[13px] font-semibold transition-all duration-200 hover:-translate-y-0.5 xl:text-sm ${active ? 'text-wine-900' : 'text-ink hover:text-wine-900'}`}>
+                    {n.label}
+                    <span className={`absolute inset-x-3 bottom-0.5 h-0.5 origin-left rounded-full bg-gold transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
+                  </Link>
+                )
+              }
+              const active = n.children.some((c) => c.to === route)
+              const isOpen = menu === n.label
               return (
-                <Link key={n.to} to={n.to} className={`nav-link group px-3 py-2 text-[13px] font-semibold transition-all duration-200 hover:-translate-y-0.5 xl:text-sm ${active ? 'text-wine-900' : 'text-ink hover:text-wine-900'}`}>
-                  {n.label}
-                  <span className={`absolute inset-x-3 bottom-0.5 h-0.5 origin-left rounded-full bg-gold transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
-                </Link>
+                <div key={n.label} data-nav-dropdown className="relative" onMouseEnter={() => setMenu(n.label)} onMouseLeave={() => setMenu(null)}>
+                  <button
+                    type="button"
+                    className={`nav-link group px-3 py-2 text-[13px] font-semibold transition-all duration-200 hover:-translate-y-0.5 xl:text-sm ${active || isOpen ? 'text-wine-900' : 'text-ink hover:text-wine-900'}`}
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    onClick={() => setMenu(isOpen ? null : n.label)}
+                  >
+                    {n.label}
+                    <svg viewBox="0 0 24 24" className={`ml-1 inline-block h-3 w-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    <span className={`absolute inset-x-3 bottom-0.5 h-0.5 origin-left rounded-full bg-gold transition-transform duration-300 ${active || isOpen ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
+                  </button>
+                  {isOpen && (
+                    <div className="absolute left-0 top-full z-50 pt-2">
+                      <div className="w-56 rounded-2xl border border-line bg-white p-2 shadow-2xl shadow-wine-900/20">
+                        {n.children.map((c) => (
+                          <Link
+                            key={c.to}
+                            to={c.to}
+                            onClick={() => setMenu(null)}
+                            className={`block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${route === c.to ? 'bg-cream-deep text-wine-900' : 'text-ink hover:bg-cream-deep hover:text-wine-900'}`}
+                          >
+                            {c.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               )
             })}
           </nav>
@@ -86,11 +138,26 @@ export function Header({ route }: { route: string }) {
         </div>
         {open && (
           <nav className="max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-line bg-white px-5 pb-8 pt-2 lg:hidden" aria-label="Mobile">
-            {NAV.map((n) => (
-              <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className={`block border-b border-line/70 py-3.5 text-base font-semibold transition-colors hover:text-gold-deep ${route === n.to ? 'text-gold-deep' : 'text-wine-900'}`}>
-                {n.label}
-              </Link>
-            ))}
+            {NAV.map((n) =>
+              'children' in n ? (
+                <div key={n.label} className="border-b border-line/70 py-3.5">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-gold-deep">{n.label}</p>
+                  <ul className="mt-2.5 space-y-3">
+                    {n.children.map((c) => (
+                      <li key={c.to}>
+                        <Link to={c.to} onClick={() => setOpen(false)} className={`block text-base font-semibold transition-colors hover:text-gold-deep ${route === c.to ? 'text-gold-deep' : 'text-wine-900'}`}>
+                          {c.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className={`block border-b border-line/70 py-3.5 text-base font-semibold transition-colors hover:text-gold-deep ${route === n.to ? 'text-gold-deep' : 'text-wine-900'}`}>
+                  {n.label}
+                </Link>
+              ),
+            )}
             <div className="pt-5"><Button to="/admissions" variant="navy">Apply Now</Button></div>
           </nav>
         )}
@@ -123,7 +190,7 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-bold uppercase tracking-[0.22em] text-gold-light">Explore</h4>
           <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 lg:grid-cols-1">
-            {NAV.map((n) => <li key={n.to}><Link to={n.to} className={col}>{n.label}</Link></li>)}
+            {NAV.flatMap((n) => ('children' in n ? n.children : [n])).map((l) => <li key={l.to}><Link to={l.to} className={col}>{l.label}</Link></li>)}
           </ul>
         </div>
         <div>
