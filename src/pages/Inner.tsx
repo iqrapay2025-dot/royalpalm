@@ -15,7 +15,7 @@ export function About() {
   ]
   return (
     <>
-      <PageHero eyebrow="About RICO" title="An elite education at an affordable price." text="Founded on July 14, 2018 as a co-educational day and boarding college." image={IMG.graduation} />
+      <PageHero eyebrow="About RICO" title="An elite education at an affordable price." text="Founded on July 14, 2018 as a co-educational day and boarding college." image={IMG.aboutBanner} />
       <Section>
         <div className="grid gap-7 md:grid-cols-3">
           {pillars.map((p, i) => (

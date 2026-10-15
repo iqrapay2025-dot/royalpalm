@@ -7,6 +7,7 @@ const campusGate = new URL('../assets/campus-gate.webp', import.meta.url).href
 const leadershipBanner = new URL('../assets/leadership-banner.webp', import.meta.url).href
 const entrepreneurship = new URL('../assets/entrepreneurship-vocational.webp', import.meta.url).href
 const artsTrack = new URL('../assets/arts-track.webp', import.meta.url).href
+const aboutBanner = new URL('../assets/about-banner.webp', import.meta.url).href
 
 const u = (id: string, w = 1200, h = 800) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
@@ -29,6 +30,7 @@ export const IMG = {
   grads: ph('20251026_100425'),
   leadershipBanner,
   campusGate,
+  aboutBanner,
 }
 
 export const SCHOOL = {
