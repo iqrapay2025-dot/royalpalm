@@ -3,8 +3,10 @@ const ictClassroom = new URL('../assets/DSC_6761.JPG', import.meta.url).href
 const classOf2026 = new URL('../assets/class-of-2026.webp', import.meta.url).href
 const airConditionedClassroom = new URL('../assets/air-conditioned-classroom.jpg', import.meta.url).href
 const entrepreneurshipTrack = new URL('../assets/entrepreneurship-braiding.jpg', import.meta.url).href
-const campusGate = new URL('../assets/campus-gate.jpg', import.meta.url).href
+const campusGate = new URL('../assets/campus-gate.webp', import.meta.url).href
+const leadershipBanner = new URL('../assets/leadership-banner.webp', import.meta.url).href
 const entrepreneurship = new URL('../assets/entrepreneurship-vocational.webp', import.meta.url).href
+const artsTrack = new URL('../assets/arts-track.webp', import.meta.url).href
 
 const u = (id: string, w = 1200, h = 800) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
@@ -21,10 +23,11 @@ export const IMG = {
   clinic: ph('school-clinic'),
   graduation: ph('20251007_135139'),
   graduation2: ph('20251014_165748'),
-  career: ph('career-day'),
+  career: new URL('../assets/career-day.webp', import.meta.url).href,
   mentor: ph('20251007_135025'),
   lecture: ph('20251006_132243'),
   grads: ph('20251026_100425'),
+  leadershipBanner,
 }
 
 export const SCHOOL = {
@@ -162,7 +165,7 @@ export const TRACKS: CardItem[] = [
     eyebrow: 'Core Track',
     title: 'Arts',
     text: 'Language, literature and the humanities, led by our Language Department under Mrs. Ikubaani.',
-    image: IMG.lecture,
+    image: artsTrack,
     to: '/academics',
   },
   {
@@ -225,8 +228,8 @@ export type StaffMember = {
 export const STAFF: StaffMember[] = [
   { slug: 'abdullahi-adam', name: 'Abdullahi Adam', role: 'General Manager, Finance & Admin', group: 'management', photoSlug: 'abdullahi-adam' },
   { slug: 'adeoye-olatunbosun', name: 'Olatunbosun Adeoye', role: 'Principal', group: 'management', bio: 'Leads RICO’s academic and pastoral vision.', image: '/photos/principal.png' },
-  { slug: 'adeyemi-tosin', name: 'Tosin Adeyemi', role: 'AGM Logistics', group: 'management' },
   { slug: 'alabi-oladimeji', name: 'Oladimeji Alabi', role: 'AGM Finance', group: 'management' },
+  { slug: 'adeyemi-tosin', name: 'Tosin Adeyemi', role: 'AGM Logistics', group: 'management' },
   { slug: 'omolere-vincent', name: 'Vincent Omolere', role: 'Admin Manager / PRO', group: 'management' },
   { slug: 'olanrewaju-samson', name: 'Samson Olanrewaju', role: 'College Secretary', group: 'management' },
   { slug: 'abisoye-titilayo', name: 'Titilayo Abisoye', role: 'HOD, Arts and Languages', group: 'management' },
@@ -239,15 +242,13 @@ export const STAFF: StaffMember[] = [
   { slug: 'hassan-afolabi', name: 'Afolabi Hassan', role: 'Economics & Commerce', group: 'teachers', photoSlug: 'wasiu-afolabi' },
   { slug: 'olayinka-mercy', name: 'Mercy Olayinka', role: 'English Language & Literature-in-English', group: 'teachers' },
   { slug: 'henry-chioma', name: 'Chioma Henry', role: 'English & Literature-in-English', group: 'teachers' },
-  { slug: 'atabofack-thomas', name: 'Thomas Atabofack', role: 'French', group: 'teachers' },
+  { slug: 'atabofack-thomas', name: 'Thomas Atabofack', role: 'French', group: 'teachers', photoSlug: 'atabofack-thomas' },
   { slug: 'ogunlusi-ifefikayomi', name: 'Ifefikayomi Ogunlusi', role: 'English Language & Music', group: 'teachers' },
   { slug: 'abubakar-rasaq', name: 'Rasaq Abubakar', role: 'Chief Imam & IRS', group: 'teachers' },
   { slug: 'abraham-afolabi', name: 'Afolabi Abraham', role: 'Horticulture', group: 'teachers' },
   { slug: 'oderinde-john', name: 'John Oderinde', role: 'TD & Mathematics', group: 'teachers' },
   { slug: 'ajiboye-abiodun', name: 'Abiodun Ajiboye', role: 'Chemistry & Mathematics', group: 'teachers' },
   { slug: 'onipede-olayinka', name: 'Olayinka Onipede', role: 'Geography & Tourism', group: 'teachers', photoSlug: 'onipede-samson' },
-  { slug: 'ishola-kehinde', name: 'Kehinde Ishola', role: 'Environmentalist', group: 'teachers' },
-  { slug: 'tsado-felicia', name: 'Felicia Tsado', role: 'Environmentalist', group: 'teachers' },
   { slug: 'ishola-olaoluwa', name: 'Olaoluwa Ishola', role: 'Hostel Master', group: 'welfare' },
   { slug: 'folayan-segun', name: 'Segun Folayan', role: 'Security Officer & Asst. Hostel Master', group: 'welfare' },
   { slug: 'babatunde-sherifat', name: 'Sherifat Babatunde', role: 'Matron / College Nurse', group: 'management' },
@@ -266,6 +267,8 @@ export const STAFF: StaffMember[] = [
   { slug: 'don-habila', name: 'Habila Don', role: 'Security Personnel', group: 'welfare' },
   { slug: 'abafaraf-simon', name: 'Simon Abafaraf', role: 'Security Personnel', group: 'welfare' },
   { slug: 'yusuf-shehu', name: 'Shehu Yusuf', role: 'Security Personnel', group: 'welfare' },
+  { slug: 'ishola-kehinde', name: 'Kehinde Ishola', role: 'Environmentalist', group: 'teachers' },
+  { slug: 'tsado-felicia', name: 'Felicia Tsado', role: 'Environmentalist', group: 'teachers' },
 ]
 
 export const NEWS: CardItem[] = [

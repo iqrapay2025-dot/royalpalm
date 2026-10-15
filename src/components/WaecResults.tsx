@@ -54,7 +54,9 @@ function summarise(data: WaecYear) {
   }
 }
 
-const EVIDENCE_YEARS = [2026].filter((y) => evidencePhotos.some(([p]) => p.includes(`/waec-${y}-`)))
+const EVIDENCE_YEARS = [...new Set(evidencePhotos.map(([p]) => Number(p.match(/waec-(\d{4})-/)?.[1])))].filter(
+  (y): y is number => Number.isFinite(y),
+).sort((a, b) => b - a)
 
 function EvidenceSwiper({ year, photos }: { year: number; photos: [string, string][] }) {
   const trackRef = useRef<HTMLDivElement>(null)
@@ -98,9 +100,9 @@ function EvidenceSwiper({ year, photos }: { year: number; photos: [string, strin
               <figure key={path} className="overflow-hidden rounded-lg border border-line">
                 <img
                   src={src}
-                  alt={`Redacted ${year} WAEC result excerpt ${pi * PER_SLIDE + j + 1}`}
+                  alt={`WAEC result excerpt ${pi * PER_SLIDE + j + 1} for ${SCHOOL_CENTRE}`}
                   loading="lazy"
-                  className="aspect-[13/5] w-full object-contain"
+                  className="aspect-[8/5] w-full object-cover object-top"
                 />
                 <figcaption className="border-t border-line bg-cream px-3 py-2 text-center text-xs font-semibold text-wine-900">
                   WASSCE {year} · {SCHOOL_CENTRE}

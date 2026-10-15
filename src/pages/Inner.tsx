@@ -106,8 +106,8 @@ const STAFF_FILTERS: { value: StaffFilter; label: string }[] = [
 
 const MANAGEMENT_TIERS: { label: string; slugs: string[] }[] = [
   { label: 'General Manager', slugs: ['abdullahi-adam'] },
-  { label: 'Assistant General Managers', slugs: ['alabi-oladimeji', 'adeyemi-tosin'] },
   { label: 'Principal', slugs: ['adeoye-olatunbosun'] },
+  { label: 'Assistant General Managers', slugs: ['alabi-oladimeji', 'adeyemi-tosin'] },
   { label: 'Heads of Department', slugs: ['abisoye-titilayo', 'agbaje-amos', 'ola-subair-fatima', 'oluribido-mike', 'israel-bukky'] },
   { label: 'Coordinators & Administration', slugs: ['atolagbe-adebukola', 'ayanlere-nurudeen', 'olanrewaju-samson', 'babatunde-sherifat', 'haruna-zakariyah', 'omolere-vincent'] },
 ]
@@ -116,6 +116,14 @@ const STAFF_GROUPS: { value: StaffGroup; label: string }[] = [
   { value: 'teachers', label: 'Teachers' },
   { value: 'welfare', label: 'Student Welfare & Support' },
 ]
+
+const ENVIRONMENTALISTS: StaffMember[] = STAFF.filter(
+  (person) => person.role.toLowerCase().includes('environmentalist'),
+)
+
+function isEnvironmentalist(person: StaffMember) {
+  return person.role.toLowerCase().includes('environmentalist')
+}
 
 function StaffDirectoryCard({ person, index, compact }: { person: StaffMember; index: number; compact: boolean }) {
   return (
@@ -143,7 +151,7 @@ export function Leadership() {
 
   return (
     <>
-      <PageHero eyebrow="Leadership & Staff" title="The people raising kings and queens." image={IMG.classroom2} />
+      <PageHero eyebrow="Leadership & Staff" title="The people raising kings and queens." image={IMG.leadershipBanner} />
       <Section>
         <div className="flex flex-wrap justify-center gap-3">
           {STAFF_FILTERS.map((filter) => (
@@ -187,7 +195,7 @@ export function Leadership() {
 
         <div key={activeFilter} className="mt-14 space-y-14">
           {groups.map((group) => {
-            const people = STAFF.filter((person) => person.group === group.value)
+            const people = STAFF.filter((person) => person.group === group.value && !isEnvironmentalist(person))
             const compact = group.value === 'teachers' || group.value === 'welfare'
             const shownPeople = group.value === 'welfare' && !showAllWelfare ? people.slice(0, 10) : people
 
@@ -213,6 +221,17 @@ export function Leadership() {
             )
           })}
         </div>
+
+        {ENVIRONMENTALISTS.length > 0 && (
+          <section className="mt-14">
+            <h2 className="text-xs font-bold uppercase tracking-[0.22em] text-gold-deep">Environmentalists</h2>
+            <div className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+              {ENVIRONMENTALISTS.map((person, index) => (
+                <StaffDirectoryCard key={person.slug} person={person} index={index} compact />
+              ))}
+            </div>
+          </section>
+        )}
 
       </Section>
     </>
