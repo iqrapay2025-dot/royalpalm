@@ -28,6 +28,7 @@ export const IMG = {
   lecture: ph('20251006_132243'),
   grads: ph('20251026_100425'),
   leadershipBanner,
+  campusGate,
 }
 
 export const SCHOOL = {

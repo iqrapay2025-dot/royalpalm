@@ -19,7 +19,7 @@ export default function Home() {
           <Reveal from="left">
             <div className="relative">
               <div className="overflow-hidden rounded-3xl bg-cream-deep">
-                <img src={IMG.classroom2} alt="Students at Royalpalm International College" className="reveal-img in aspect-[4/3] w-full object-cover" />
+                <img src={IMG.campusGate} alt="The gates and Mega Hall of Royalpalm International College" className="reveal-img in aspect-[4/3] w-full object-cover" />
               </div>
               <div className="float absolute -bottom-6 -right-2 rounded-2xl bg-wine-900 px-6 py-5 text-white shadow-xl md:-right-6">
                 <p className="text-xs uppercase tracking-[0.2em] text-gold-light">Founded</p>
