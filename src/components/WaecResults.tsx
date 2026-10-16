@@ -102,11 +102,8 @@ function EvidenceSwiper({ year, photos }: { year: number; photos: [string, strin
                   src={src}
                   alt={`WAEC result excerpt ${pi * PER_SLIDE + j + 1} for ${SCHOOL_CENTRE}`}
                   loading="lazy"
-                  className="aspect-[8/5] w-full object-cover object-top"
+                  className="h-auto w-full"
                 />
-                <figcaption className="border-t border-line bg-cream px-3 py-2 text-center text-xs font-semibold text-wine-900">
-                  WASSCE {year} · {SCHOOL_CENTRE}
-                </figcaption>
               </figure>
             ))}
           </div>
@@ -174,7 +171,7 @@ export function WaecResults() {
 
   const figures = [
     { value: String(s.candidates), label: 'candidates' },
-    { value: `${s.creditPct}%`, label: 'of papers at credit (C6) or better' },
+    { value: `${s.creditPct}%`, label: 'of papers at credit level' },
     { value: `${s.a1Pct}%`, label: 'of papers graded A1' },
     { value: `${s.englishAndMaths} of ${s.candidates}`, label: 'with credits in English and Mathematics' },
   ]

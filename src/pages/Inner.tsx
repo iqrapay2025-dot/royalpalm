@@ -50,12 +50,12 @@ export function About() {
 export function Academics() {
   return (
     <>
-      <PageHero eyebrow="Academics" title="Nigerian roots. Cambridge reach." text="A hybrid curriculum for ages 11–16." image={IMG.classroom} />
+      <PageHero eyebrow="Academics" title="Nigerian roots. Cambridge reach." text="A hybrid curriculum for ages 10–16." image={IMG.classroom} />
       <Section>
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
             <SectionHeader align="left" eyebrow="Curriculum" title="The best of both worlds" />
-            <p className="mt-6 text-lg leading-relaxed text-mute">RICO blends the Nigerian National Curriculum with the International Curriculum. As a registered Cambridge International School, we offer Cambridge Lower Secondary and Upper Secondary pathways for ages 11–16.</p>
+            <p className="mt-6 text-lg leading-relaxed text-mute">RICO blends the Nigerian National Curriculum with the International Curriculum. As a registered Cambridge International School, we offer Cambridge Lower Secondary and Upper Secondary pathways for ages 10–16.</p>
           </Reveal>
           <Reveal delay={100}><div className="overflow-hidden rounded-3xl bg-cream-deep"><img src={IMG.lecture} alt="Students in class" className="aspect-[4/3] w-full object-cover" /></div></Reveal>
         </div>

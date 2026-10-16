@@ -10,7 +10,7 @@ export default function Home() {
       <HeroSlider />
       <StatBar overlap />
       <div className="mt-20" />
-      <CtaBanner title="Give your child the RICO advantage." text="Day and boarding places for ages 11–16." cta={{ label: 'Request Info', to: '/admissions' }} />
+      <CtaBanner title="Give your child the RICO advantage." text="Day and boarding places for ages 10–16." cta={{ label: 'Request Info', to: '/admissions' }} />
 
       <Marquee />
 

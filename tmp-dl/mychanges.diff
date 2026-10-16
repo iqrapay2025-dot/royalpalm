@@ -1,0 +1,78 @@
+diff --git a/src/components/WaecResults.tsx b/src/components/WaecResults.tsx
+index 7b94261..5cbd5c1 100644
+--- a/src/components/WaecResults.tsx
++++ b/src/components/WaecResults.tsx
+@@ -102,11 +102,8 @@ function EvidenceSwiper({ year, photos }: { year: number; photos: [string, strin
+                   src={src}
+                   alt={`WAEC result excerpt ${pi * PER_SLIDE + j + 1} for ${SCHOOL_CENTRE}`}
+                   loading="lazy"
+-                  className="aspect-[8/5] w-full object-cover object-top"
++                  className="h-auto w-full"
+                 />
+-                <figcaption className="border-t border-line bg-cream px-3 py-2 text-center text-xs font-semibold text-wine-900">
+-                  WASSCE {year} · {SCHOOL_CENTRE}
+-                </figcaption>
+               </figure>
+             ))}
+           </div>
+@@ -174,7 +171,7 @@ export function WaecResults() {
+ 
+   const figures = [
+     { value: String(s.candidates), label: 'candidates' },
+-    { value: `${s.creditPct}%`, label: 'of papers at credit (C6) or better' },
++    { value: `${s.creditPct}%`, label: 'of papers at credit level' },
+     { value: `${s.a1Pct}%`, label: 'of papers graded A1' },
+     { value: `${s.englishAndMaths} of ${s.candidates}`, label: 'with credits in English and Mathematics' },
+   ]
+diff --git a/src/lib/data.ts b/src/lib/data.ts
+index d91e82a..09caeba 100644
+--- a/src/lib/data.ts
++++ b/src/lib/data.ts
+@@ -78,9 +78,9 @@ export const NAV: NavItem[] = [
+ 
+ export const STATS = [
+   { value: 100, suffix: '%', label: 'WAEC / NECO / UTME pass rate since inception' },
+-  { value: 1500, suffix: '+', label: 'Active students' },
+-  { value: 4570, suffix: '+', label: 'Graduated alumni' },
+-  { value: 100, suffix: '+', label: 'Professional teachers' },
++  { value: 200, suffix: '+', label: 'Active students' },
++  { value: 96, suffix: '+', label: 'Graduated alumni' },
++  { value: 40, suffix: '+', label: 'Professional staff' },
+ ]
+ 
+ export type Alumni = {
+@@ -91,6 +91,12 @@ export type Alumni = {
+ }
+ 
+ export const ALUMNI: Alumni[] = [
++  {
++    name: 'Osoroh Oghenemega',
++    role: 'Pioneer Headboy (Ex-Student)',
++    photo: 'pioneer-headboy',
++    quote: 'As a first class graduate of Aeronautical and Astronautical Engineering, I have Royalpalm International College to thank for a lot of my achievements. As the Pioneer Headboy, I built resilience, sharper communication and problem-solving skills. RICO was where my character was built and my fondest memories were made.',
++  },
+   {
+     name: 'Adekanye Ameera',
+     role: 'Ex- Student',
+@@ -121,12 +127,6 @@ export const ALUMNI: Alumni[] = [
+     photo: 'olanrewaju-sherif',
+     quote: 'My name is Olanrewaju Sherif Bidemi, and I am now a student at the ICT University of Yaoude in Cameroon. I graduated from ROYALPALM INTERNATIONAL COLLEGE in the class of 2021. My time at ROYALPALM INTERNATIONAL COLLEGE was really great...',
+   },
+-  {
+-    name: 'Osoroh Oghenemega',
+-    role: 'Pioneer Headboy (Ex-Student)',
+-    photo: 'pioneer-headboy',
+-    quote: 'As a first class graduate of Aeronautical and Astronautical Engineering, I have Royalpalm International College to thank for a lot of my achievements. As the Pioneer Headboy, I built resilience, sharper communication and problem-solving skills. RICO was where my character was built and my fondest memories were made.',
+-  },
+ ]
+ 
+ export const SLIDES = [
+@@ -141,7 +141,7 @@ export const SLIDES = [
+     image: IMG.classroom,
+     eyebrow: 'Registered Cambridge International School',
+     title: 'Nigerian roots. International reach.',
+-    text: 'A hybrid curriculum blending the Nigerian National Curriculum with Cambridge Lower and Upper Secondary pathways for ages 11–16.',
++    text: 'A hybrid curriculum blending the Nigerian National Curriculum with Cambridge Lower and Upper Secondary pathways for ages 10–16.',
+     cta: { label: 'Explore Academics', to: '/academics' },
+   },
+   {
