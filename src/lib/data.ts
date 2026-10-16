@@ -46,7 +46,7 @@ export const SCHOOL = {
   email: 'royalpalmcollegeilorin@gmail.com',
   facebook: 'https://facebook.com/royalpalmrico',
   instagram: 'https://instagram.com/royalpalmintlcollege',
-  x: 'https://twitter.com/ROYALPALMCOLEGE?t=GMwr3tLMFytPi-1Tp9soUg&s=09',
+  x: 'https://x.com/RCollege22283',
   whatsapp: 'https://wa.me/message/N46BVV6TMZGDM1',
   tiktok: 'https://tiktok.com/@ricoilorin?_r=1&_t=ZS-9ATU16FElPt',
 }
