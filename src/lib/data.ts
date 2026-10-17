@@ -181,7 +181,7 @@ export const TRACKS: CardItem[] = [
   {
     eyebrow: 'Core Track',
     title: 'Arts',
-    text: 'Language, literature and the humanities, led by our Language Department under Mrs. Ikubaani.',
+    text: 'Language, literature and the humanities, led by our Language Department under Mrs. Abisoye.',
     image: artsTrack,
     to: '/academics',
   },
